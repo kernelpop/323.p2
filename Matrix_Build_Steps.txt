@@ -1,0 +1,29 @@
+# LL(1) Parse Matrix
+
+The LL(1) parse matrix is straight-forward to build once the grammar has been converted to simple LL- compatible form. This involves several preparatory steps with the grammar:
+
+1. Convert the grammar rules to simple rules (i.e., no RHS regex operators, especially choice (AKA alternative)), because only simple rules go in parser matrix cells
+2. LRE (Left Recursion Elimination), to avoid LL infinite recursion
+3. Left Factoring, to avoid more than one simple rule in a cell
+4. First Set construction, to see what simple rules go into LL matrix cells
+5. Follow Set construction, to see what epsilon rules go into LL matrix cells
+
+A3 Grammar
+Pgm = kwdprog Block
+Block = brace1 Stmts brace2
+Stmts = Stmt semi Stmts | eps
+Stmt = Astmt | Ostmt | Wstmt | Fstmt AStmt = id equal Y
+Y = kwdinput
+Y =E
+Ostmt = kwdprint paren1 Elist paren2 Wstmt = kwdwhile Pexpr Block
+Fstmt = kwdif Pexpr Block Else2 Else2 = kwdelseif Pexpr Block Else2
+Else2 = kwdelse Block | eps
+Elist = E Elist2 | eps
+Elist2 = comma Elist
+E = E Opadd T | T
+T = T Opmul F | F
+F = Fatom | Pexpr
+Pexpr = paren1 E paren2
+Fatom = id | int | float | string
+Opadd = plus | minus
+Opmul = aster | slash | caret
