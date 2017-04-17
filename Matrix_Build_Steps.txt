@@ -63,30 +63,42 @@ First(32) = {float}
 First(31) = {int}
 First(30) = {id}
 First(29) = {paren1}
-First(28) = First(29) = {paren1}
-First(27) = { First(30) + First(31) + First(32) + First(33) } = {id, int, float, string}
+First(28) = First(29)
+            = {paren1}
+First(27) = { First(30) + First(31) + First(32) + First(33) }
+            = {id, int, float, string}
 First(26) = {eps}
-First(25) = { First(27) +  First(28) } = {id, int, float, string, paren1}
-First(24) = { First(36) + First(37) First(38) } = {aster, slash, caret}
+First(25) = { First(27) +  First(28) }
+            = {id, int, float, string, paren1}
+First(24) = { First(36) + First(37) First(38) }
+            = {aster, slash, caret}
 First(23) = {eps}
-First(22) = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
-First(21) = { First(34) + First(35) } = {plus, minus}
+First(22) = { First(25) } = { First(27) +  First(28) }
+            = {id, int, float, string, paren1}
+First(21) = { First(34) + First(35) }
+            = {plus, minus}
 First(20) = {comma}
 First(19) = {eps}
-First(18) = { First(22) } = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(18) = { First(22) } = { First(25) } = { First(27) +  First(28) }
+            = {id, int, float, string, paren1}
 First(17) = {eps}
 First(16) = {kwdelse}
 First(15) = {kwdelseif}
 First(14) = {kwdif}
 First(13) = {kwdwhile}
 First(12) = {kwdprint}
-First(11) = { First(22) } = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(11) = { First(22) } = { First(25) } = { First(27) +  First(28) }
+            = {id, int, float, string, paren1}
 First(10) = {kwdinput}
 First( 9) = {id}
-First( 8) = { First(14) } = {kwdif}
-First( 7) = { First(13) } = {kwdwhile}
-First( 6) = { First(12) } = {kwdprint}
-First( 5) = { First(9) } = {id}
+First( 8) = { First(14) }
+            = {kwdif}
+First( 7) = { First(13) }
+            = {kwdwhile}
+First( 6) = { First(12) }
+            = {kwdprint}
+First( 5) = { First(9) }
+            = {id}
 First( 4) = {eps}
 First( 3) = { First(5) + First(6) + First(7) + First(8) }
             = {id, kwdprint, kwdwhile, kwdif}
