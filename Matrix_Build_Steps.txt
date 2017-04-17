@@ -1,3 +1,4 @@
+
 # LL(1) Parse Matrix
 
 The LL(1) parse matrix is straight-forward to build once the grammar has been converted to simple LL- compatible form. This involves several preparatory steps with the grammar:
@@ -9,21 +10,149 @@ The LL(1) parse matrix is straight-forward to build once the grammar has been co
 5. Follow Set construction, to see what epsilon rules go into LL matrix cells
 
 A3 Grammar
-Pgm = kwdprog Block
-Block = brace1 Stmts brace2
-Stmts = Stmt semi Stmts | eps
-Stmt = Astmt | Ostmt | Wstmt | Fstmt AStmt = id equal Y
-Y = kwdinput
-Y =E
-Ostmt = kwdprint paren1 Elist paren2 Wstmt = kwdwhile Pexpr Block
-Fstmt = kwdif Pexpr Block Else2 Else2 = kwdelseif Pexpr Block Else2
-Else2 = kwdelse Block | eps
-Elist = E Elist2 | eps
-Elist2 = comma Elist
-E = E Opadd T | T
-T = T Opmul F | F
-F = Fatom | Pexpr
-Pexpr = paren1 E paren2
-Fatom = id | int | float | string
-Opadd = plus | minus
-Opmul = aster | slash | caret
+1   Pgm = kwdprog Block
+2   Block = brace1 Stmts brace2
+3   Stmts = Stmt semi Stmts
+4   Stmts = eps
+5   Stmt = Astmt
+6   Stmt = Ostmt
+7   Stmt = Wstmt
+8   Stmt = Fstmt
+9   Astmt = id equal Y
+10  Y = kwdinput
+11  Y = E
+12  Ostmt = kwdprint paren1 Elist paren2
+13  Wstmt = kwdwhile Pexpr Block
+14  Fstmt = kwdif Pexpr Block Else2
+15  Else2 = kwdelseif Pexpr Block Else2
+16  Else2 = kwdelse Block
+17  Else2 = eps
+    
+18  Elist = E Elist2
+19  Elist = eps
+20  Elist2 = comma Elist
+    
+21  R = Opadd T R
+22  E = T R
+23  R = eps  // LRE for E
+24  S = Opmul F S
+25  T = F S
+26  S = eps  // LRE for T
+27  F = Fatom
+28  F = Pexpr
+29  Pexpr = paren1 E paren2
+30  Fatom = id
+31  Fatom = int
+32  Fatom = float
+33  Fatom = string
+34  Opadd = plus
+35  Opadd = minus
+36  Opmul = aster
+37  Opmul = slash
+38  Opmul = caret
+
+// First() => first sets
+
+First(38) = {caret}
+First(37) = {slash}
+First(36) = {aster}
+First(35) = {minus}
+First(34) = {plus}
+First(33) = {string}
+First(32) = {float}
+First(31) = {int}
+First(30) = {id}
+First(29) = {paren1}
+First(28) = First(29) = {paren1}
+First(27) = { First(30) + First(31) + First(32) + First(33) } = {id, int, float, string}
+First(26) = {eps}
+First(25) = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(24) = { First(36) + First(37) First(38) } = {aster, slash, caret}
+First(23) = {eps}
+First(22) = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(21) = { First(34) + First(35) } = {plus, minus}
+First(20) = {comma}
+First(19) = {eps}
+First(18) = { First(22) } = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(17) = {eps}
+First(16) = {kwdelse}
+First(15) = {kwdelseif}
+First(14) = {kwdif}
+First(13) = {kwdwhile}
+First(12) = {kwdprint}
+First(11) = { First(22) } = { First(25) } = { First(27) +  First(28) } = {id, int, float, string, paren1}
+First(10) = {kwdinput}
+First( 9) = {id}
+First( 8) = { First(14) } = {kwdif}
+First( 7) = { First(13) } = {kwdwhile}
+First( 6) = { First(12) } = {kwdprint}
+First( 5) = { First(9) } = {id}
+First( 4) = {eps}
+First( 3) = { First(5) + First(6) + First(7) + First(8) }
+            = {id, kwdprint, kwdwhile, kwdif}
+First( 2) = {brace1}
+First( 1) = {kwdprog}
+
+// Follow() => first sets
+
+Follow( 1) = {$}
+Follow( 2) = { Follow(1) + Follow(13) + First(15) + First(16) + Follow(16) }
+            = {$, semi, kwdelseif, kwdelse}
+Follow( 3) = { brace2 + Follow(3) }
+            = {brace2}
+Follow( 5) = {semi}
+Follow( 6) = {semi}
+Follow( 7) = {semi}
+Follow( 8) = {semi}
+Follow( 9) = { Follow (5) }
+            = {semi}
+Follow(10) = { Follow(9) }
+            = {semi}
+Follow(11) = { Follow(9) }
+            = {semi}
+Follow(12) = { Follow(6) }
+            = {semi}
+Follow(13) = { Follow(7) }
+            = {semi}
+Follow(14) = { Follow(8) }
+            = {semi}
+Follow(15) = { Follow(14) + Follow(15) }
+            = {semi}
+Follow(16) = { Follow(14) + Follow(15) }
+            = {semi}
+Follow(18) = {paren2 + Follow(20) }
+            = {paren2}
+Follow(20) = { Follow(18) }
+            = {paren2}
+Follow(21) = { Follow(21) + Follow(22) }
+            = {semi, comma, paren2}
+Follow(22) = { Follow(10) + Follow(11) + First(20) + paren2 }
+            = {semi, comma, paren2}
+Follow(24) = { Follow(24) + Follow(25)}
+            = {semi, comma, paren2}
+Follow(25) = { First(21) + Follow(22)}
+            = {plus, minus, semi, comma, paren2}
+Follow(27) = { First(24) }
+            = {aster, slash, caret}
+Follow(28) = { First(24) }
+            = {aster, slash, caret}
+Follow(29) = { First(2) + Follow(28) }
+            = {brace1, aster, slash, caret}
+Follow(30) = { Follow(27) }
+            = {aster, slash, caret}
+Follow(31) =  { Follow(27) }
+            = {aster, slash, caret}
+Follow(32) = { Follow(27) }
+            = {aster, slash, caret}
+Follow(33) = { Follow(27) }
+            = {aster, slash, caret}
+Follow(34) = { First(25) }
+            = {id, int, float, string, paren1}
+Follow(35) = { First(25) }
+            = {id, int, float, string, paren1}
+Follow(36) = { First(27) + First(28) }
+            = {id, int, float, string, paren1}
+Follow(37) = { First(27) + First(28) }
+            = {id, int, float, string, paren1}
+Follow(38) = { First(27) + First(28) }
+            = {id, int, float, string, paren1}
