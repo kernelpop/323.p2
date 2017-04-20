@@ -107,33 +107,62 @@ static array<Rule> rules = {
     '$'
 }
 
-    
+ void createRules() {
+    rules['Opmul'] = Terminal("Opmul");  
+    rules['Opadd'] = Terminal("Opadd");  
+    rules['Fatom'] =   NonTerminal("Fatom",    );  
+    rules['Pexpr'] =   NonTerminal("Pexpr",    );  
+    rules['F'] =   NonTerminal("F",    );  
+    rules['T'] =   NonTerminal("T",    );  
+    rules['S'] =   NonTerminal("S",    );  
+    rules['E'] =   NonTerminal("E",    );  
+    rules['R'] =   NonTerminal("R",    );  
+    rules['Elist2']    =   NonTerminal("Elist2",   );  
+    rules['Elist'] =   NonTerminal("Elist",    );  
+    rules['Else2'] =   NonTerminal("Else2",    );  
+    rules['Fstmt'] =   NonTerminal("Fstmt",    );  
+    rules['Wstmt'] =   NonTerminal("Wstmt",    );  
+    rules['Ostmt'] =   NonTerminal("Ostmt",    );  
+    rules['Y'] =   NonTerminal("Y",    );  
+    rules['Astmt'] =   NonTerminal("Astmt",    );  
+    rules['Stmt']  =   NonTerminal("Stmt", );  
+    rules['Stmts']  =   NonTerminal("Stmts",    );  
+    rules['Block'] =   NonTerminal("Block",    );  
+    rules['Pgm']   =   NonTerminal("Pgm",  {Terminal("kwdp"),  NonTerminal("Block")});
+
+
+
+
+    rules['Pgm'] = NonTerminal("Pgm", {Terminal("kwdp"), NonTerminal("Block")});
+    rules['Block'] = NonTerminal("Block", );
+    rules['Stmts'] = NonTerminal("Stmts", );
+    rules['Stmt'] = NonTerminal("Stmt", );
+    rules['Astmt'] = NonTerminal("Astmt", );
+    rules['Y'] = NonTerminal("Y", );
+    rules['Ostmt'] = NonTerminal("Ostmt", );
+    rules['Wstmt'] = NonTerminal("Wstmt", );
+    rules['Fstmt'] = NonTerminal("Fstmt", );
+    rules['Else2'] = NonTerminal("Else2", );
+    rules['Elist'] = NonTerminal("Elist", );
+    rules['Elist2'] = NonTerminal("Elist2", );
+    rules['R'] = NonTerminal("R", );
+    rules['E'] = NonTerminal("E", );
+    rules['S'] = NonTerminal("S", );
+    rules['T'] = NonTerminal("T", );
+    rules['F'] = NonTerminal("F", );
+    rules['Pexpr'] = NonTerminal("Pexpr", );
+    rules['Fatom'] = NonTerminal("Fatom", );
+    rules['Opadd'] = NonTerminal("Opadd", );
+    rules['Opmul'] = NonTerminal("Opmul", );
+ }   
 
 public:
     Grammar() {
-        rules['Pgm'] = NonTerminal('Pgm');
-        rules['Block'] = NonTerminal('Block');
-        rules['Stmts'] = NonTerminal('Stmts');
-        rules['Stmt'] = NonTerminal('Stmt');
-        rules['Astmt'] = NonTerminal('Astmt');
-        rules['Y'] = NonTerminal('Y');
-        rules['Ostmt'] = NonTerminal('Ostmt');
-        rules['Wstmt'] = NonTerminal('Wstmt');
-        rules['Fstmt'] = NonTerminal('Fstmt');
-        rules['Else2'] = NonTerminal('Else2');
-        rules['Elist'] = NonTerminal('Elist');
-        rules['Elist2'] = NonTerminal('Elist2');
-        rules['R'] = NonTerminal('R');
-        rules['E'] = NonTerminal('E');
-        rules['S'] = NonTerminal('S');
-        rules['T'] = NonTerminal('T');
-        rules['F'] = NonTerminal('F');
-        rules['Pexpr'] = NonTerminal('Pexpr');
-        rules['Fatom'] = NonTerminal('Fatom');
-        rules['Opadd'] = NonTerminal('Opadd');
-        rules['Opmul'] = NonTerminal('Opmul');
+        createRules();
     }
     ~Grammar();
+
+    create
 
     Rule getRuleAt(string top, string next) {
 
