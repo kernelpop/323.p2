@@ -1,4 +1,4 @@
-
+#include <list>
 
 class Symbol {
     string name;
@@ -10,22 +10,27 @@ public:
     }
     ~Symbol();
     
+    bool Symbol::operator==(Symbol &rhs) const{
+        return this->name == rhs.name;
+    } 
 };
 
 class Terminal : public Symbol {
     Token* token;
 public:
-    Terminal(string rName, Token* rToken) : Symbol(rName, true) {
+    Terminal(string rName, list<Token> rToken) : Symbol(rName, true) {
         token = rToken;
+    }
+    Terminal(string rName) : Symbol(rName, true) {
     }
     ~Terminal();
     
 };
 
 class NonTerminal : public Symbol {
-    Symbol* rhs;
+    list<Symbol> rhs;
 public:
-    NonTerminal(string rName, Symbol* rRhs) : Symbol(rName, false) {
+    NonTerminal(string rName, list<Symbol> rRhs) : Symbol(rName, false) {
         rhs = rRhs;
     }
     ~NonTerminal();
