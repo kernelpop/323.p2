@@ -1,9 +1,11 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Token.cpp"
+#include "token.h"
 #include "Grammar.cpp"
 #include "SymTable.cpp"
+#include "Node.cpp"
+
 
 using namespace std;
 
@@ -20,7 +22,7 @@ class Parser {
 	}
 
 	Parser() {
-		gmr = new Grammer();
+		gmr = new Grammar();
 	}
 
 	/**
