@@ -1,4 +1,8 @@
 #include <list>
+#include <string>
+#include "token.h"
+
+using namespace std;
 
 class Symbol {
     string name;

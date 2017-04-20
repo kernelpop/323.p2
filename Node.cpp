@@ -1,8 +1,13 @@
+#include <string>
+#include "Symbol.cpp"
+
+using namespace std;
+
 class Node {
     Symbol* content;
     list<Node*> children;
 public:
-    Node(Symbol rContent) {
+    Node(Symbol * rContent) {
         content = rContent;
     }
     ~Node();
