@@ -53,9 +53,9 @@ A3 Grammar
 
 // First() => first sets
 
-First(38) = {caret}
-First(37) = {slash}
-First(36) = {aster}
+First(38) = {caret}     \
+First(37) = {slash}      |----> First(Opmul) = {caret, slash, aster}
+First(36) = {aster}     /
 First(35) = {minus}
 First(34) = {plus}
 First(33) = {string}
