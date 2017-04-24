@@ -16,9 +16,13 @@ public:
         children.insert(newChild);
     }
 
+	list<Node*> getChildren() {
+		return children;
+	}
+
     Node find(string node) {
         if (children.empty()) {
-            if (content.name == node) {
+            if (content.name == node) {			// Please comment on the logic of this if statement, not sure I undersand it
                 return content
             } else {
                 return NULL;

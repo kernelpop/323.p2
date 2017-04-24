@@ -53,7 +53,7 @@ class Parser {
 			Symbol top = workingStack.top();
 			Token front = inputStream.front();
 
-			if(top.isTerminal) {
+			if(top.isTerminal()) {
 				if(top.name != front.id) {
 					// TODO: throw an error
 					// Error: epected x, found y, line front.line
@@ -112,7 +112,15 @@ class Parser {
 	    @param tree a node pointer to the tree to serialize
 	*/
 	string serializeTree(Node* tree) {
-		// TODO: Serialize the tree
+		
+		if (tree->getChildren.empty()) {	// If the tree has no children, return a null string
+			return "";
+		}
+
+		if (tree->getChildren[5]) {
+
+		}
+
 	}
 
-}
+};
