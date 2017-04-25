@@ -11,3 +11,11 @@ int main() {
 	return 0;
 }
 
+void runParser(vector<Token> tokenList) {
+    Parser parser();
+
+    parser.addTokensToParse(tokenList);
+    parser.makePST(); // Add bool param to print tree?
+    // parser.makeAST();
+
+}
