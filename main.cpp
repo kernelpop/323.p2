@@ -36,11 +36,11 @@ int main() {
 
 vector<Token> runTokenizer() {
 	int x = 0;
-	
+
 	cout << "Please input a test number or a negative number to exit: ";
 	cin >> x;
-	
+
 	if (x < 0) {
 		exit(0);
 	}
-
+}
