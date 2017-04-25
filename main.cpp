@@ -13,28 +13,16 @@ vector<Token> _Tokens;
 vector<string> _Strings;
 
 
-//	========  Function Prototypes  ========
-vector<Token> runTokenizer();
-void runParser(vector<Token>);
-vector<Token> tokenize(vector<string> lines);
-bool isLetter(char c, bool firstChar);
-bool isNumber(char c, bool firstChar);
-string whichKwd(string s);
-string whichNumType(string s);
-Token tokenate(int ln, string id, int ix, string str);
-Token tokenate(int ln, string id, string str);
-Token tokenate(int ln, string id);
-static const string NOTKWD("NOTKWD");
 
 int main() {
 	
-	_Tokens = runTokenizer();
-	//runParser(_Tokens);
+	_Tokens = runTokenizer(Test_File);
+	// runParser(_Tokens);
 
 	return 0;
 }
 
-vector<Token> runTokenizer() {
+vector<Token> runTokenizer(string file) {
 	int x = 0;
 	
 	cout << "Please input a test number or a negative number to exit: ";
@@ -42,5 +30,14 @@ vector<Token> runTokenizer() {
 	
 	if (x < 0) {
 		exit(0);
-	}
+    }
+}
+
+void runParser(vector<Token> tokenList) {
+    Parser parser();
+    parser.addTokensToParse(tokenList);
+    parser.makePST();
+    parser.makeAST();
+
+}
 
