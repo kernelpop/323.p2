@@ -5,6 +5,7 @@ using namespace std;
 
 class Node {
     Symbol* content;
+    Node* parent;
     list<Node*> children;
 public:
     Node(Symbol * rContent) {
