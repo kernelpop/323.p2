@@ -4,6 +4,13 @@
 
 using namespace std;
 
+//	========  Variables  ========
+const int KEY_WORD_SIZE = 13;
+string keyWord[KEY_WORD_SIZE] = { "prog", "main", "fcn", "class",
+"float", "int", "string", "if",
+"elseif", "else", "while", "input",
+"print" };
+
 //	========  Function Prototypes  ========
 vector<Token> tokenize(vector<string> lines);
 bool isLetter(char c, bool firstChar);
