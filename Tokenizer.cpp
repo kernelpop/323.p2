@@ -4,73 +4,77 @@
 
 using namespace std;
 
+//	========  Function Prototypes  ========
+vector<Token> tokenize(vector<string> lines);
+bool isLetter(char c, bool firstChar);
+bool isNumber(char c, bool firstChar);
+string whichKwd(string s);
+string whichNumType(string s);
+Token tokenate(int ln, string id, int ix, string str);
+Token tokenate(int ln, string id, string str);
+Token tokenate(int ln, string id);
+static const string NOTKWD("NOTKWD");
 
-class Tokenizer {
-public:
-	Tokenizer();
-	~Tokenizer();
 
-
-
-	vector<Token> tokenize(vector<string> lines) {
-		vector<Token> TokenList = *new vector<Token>();
+vector<Token> tokenize(vector<string> lines) {
+	vector<Token> TokenList = *new vector<Token>();
 
 	// Vriables for token creation
-		int currLine = 0;
-		int currTokenIndex = 0;
-		string currID;
-		string currString;
+	int currLine = 0;
+	int currTokenIndex = 0;
+	string currID;
+	string currString;
 
-		if (!lines.empty()) {				// Make sure lines is not empty
-			for (size_t i = 0; i < lines.size(); i++) {            // Going through each line
+	if (!lines.empty()) {				// Make sure lines is not empty
+		for (size_t i = 0; i < lines.size(); i++) {            // Going through each line
 
-				currLine++;		// Increment line number
-				currTokenIndex = 0;	// Reset token index
+			currLine++;		// Increment line number
+			currTokenIndex = 0;	// Reset token index
 
-				for (size_t _char = 0; _char < lines[i].length(); _char++) {     // Going through each character in a line
+			for (size_t _char = 0; _char < lines[i].length(); _char++) {     // Going through each character in a line
 
-					if (lines[i][_char] == '/') {
+				if (lines[i][_char] == '/') {
 
-						// Check for comments
-						if (lines[i][_char + 1] == '/') {
-							break;	// A comment has been found, stop processing this line and move on to the next
-						}
-						// 48 slash = '/'
-						else {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "slash"));
-						}
+					// Check for comments
+					if (lines[i][_char + 1] == '/') {
+						break;	// A comment has been found, stop processing this line and move on to the next
 					}
-					else if (lines[i][_char] == '"') {	// The beginning of a string has been found
-						string s;
-						++_char;
-						while (lines[i][_char] != '"') {	//	Until the quote is closed keep apending chars to the string
-							s.append(string(1, lines[i][_char]));
-							++_char;
-						}
+					// 48 slash = '/'
+					else {
 						currTokenIndex++;
-						// create token for string
-						TokenList.push_back(tokenate(currLine, "string", s));
+						TokenList.push_back(tokenate(currLine, "slash"));
 					}
-					// If the first character is a letter extract
-					// the whole word (from current character until
-					// you reach a non-word character)
-					else if (isLetter(lines[i][_char], true)) {
-						string s = string(1, lines[i][_char]);
+				}
+				else if (lines[i][_char] == '"') {	// The beginning of a string has been found
+					string s;
+					++_char;
+					while (lines[i][_char] != '"') {	//	Until the quote is closed keep apending chars to the string
+						s.append(string(1, lines[i][_char]));
+						++_char;
+					}
+					currTokenIndex++;
+					// create token for string
+					TokenList.push_back(tokenate(currLine, "string", s));
+				}
+				// If the first character is a letter extract
+				// the whole word (from current character until
+				// you reach a non-word character)
+				else if (isLetter(lines[i][_char], true)) {
+					string s = string(1, lines[i][_char]);
+					_char++;
+					while (isLetter(lines[i][_char], false)) {
+						s.append(string(1, lines[i][_char]));
 						_char++;
-						while (isLetter(lines[i][_char], false)) {
-							s.append(string(1, lines[i][_char]));
-							_char++;
-						}
-						_char--;
-						if (whichKwd(s) == NOTKWD) {         // If not a kwd then it's ident
-							currTokenIndex++;
-							// create token for ident
+					}
+					_char--;
+					if (whichKwd(s) == NOTKWD) {         // If not a kwd then it's ident
+						currTokenIndex++;
+						// create token for ident
 						TokenList.push_back(tokenate(currLine, "ident", currTokenIndex, s));
 					}
 					else {
 						currTokenIndex++;
-							// create token for kwd
+						// create token for kwd
 						TokenList.push_back(tokenate(currLine, whichKwd(s)));
 					}
 				}
@@ -78,44 +82,44 @@ public:
 					string intStr = string(1, lines[i][_char]);
 					_char++;
 
-						// ERROR Check: can't have -.1 need -0,1
+					// ERROR Check: can't have -.1 need -0,1
 					while (isNumber(lines[i][_char], false)) {
 						intStr.append(string(1, lines[i][_char]));
 						_char++;
 					}
 					_char--;
-						if (whichNumType(intStr) == "int") {         // If not a float it's int
-							currTokenIndex++;
-							// create token for int
+					if (whichNumType(intStr) == "int") {         // If not a float it's int
+						currTokenIndex++;
+						// create token for int
 						TokenList.push_back(tokenate(currLine, "int", intStr));
 					}
 					else if (whichNumType(intStr) == "float") {
 						currTokenIndex++;
-							// create token for float
+						// create token for float
 						TokenList.push_back(tokenate(currLine, "float", intStr));
 					}
 				}
 				else {
 					switch (lines[i][_char]) {
-							// Paired delimeters
-							// 6 comma = ','
-						case ',':
+						// Paired delimeters
+						// 6 comma = ','
+					case ',':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "comma"));
 						break;
-							// 7 semi = ';'
-						case ';':
+						// 7 semi = ';'
+					case ';':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "semi"));
 						break;
-							// 31 angle1 = '<'
-						case '<':
+						// 31 angle1 = '<'
+					case '<':
 						if (lines[i][_char + 1] == '=') {
-								// 54 ople = "<="
+							// 54 ople = "<="
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "ople"));
 						}
-							// 56 opshl = "<<"
+						// 56 opshl = "<<"
 						else if (lines[i][_char + 1] == '<') {
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "opshl"));
@@ -125,15 +129,15 @@ public:
 							TokenList.push_back(tokenate(currLine, "angle1"));
 						}
 						break;
-							// 32 angle2 = '>'
-						case '>':
+						// 32 angle2 = '>'
+					case '>':
 						if (lines[i][_char + 1] == '=') {
-								// 55 opge = ">="
+							// 55 opge = ">="
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "opge"));
 						}
 						else if (lines[i][_char + 1] == '>') {
-								// 57 opshr = ">>"
+							// 57 opshr = ">>"
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "opshr"));
 						}
@@ -142,61 +146,61 @@ public:
 							TokenList.push_back(tokenate(currLine, "angle2"));
 						}
 						break;
-							// 33 brace1 = '{'
-						case '{':
+						// 33 brace1 = '{'
+					case '{':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "brace1"));
 						break;
-							// 34 brace2 = '}'
-						case '}':
+						// 34 brace2 = '}'
+					case '}':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "brace2"));
 						break;
-							// 35 bracket1 = '['
-						case '[':
+						// 35 bracket1 = '['
+					case '[':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "bracket1"));
 						break;
-							// 36 bracket2 = ']'
-						case ']':
+						// 36 bracket2 = ']'
+					case ']':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "bracket2"));
 						break;
-							// 37 parens1 = '('
-						case '(':
+						// 37 parens1 = '('
+					case '(':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "parens1"));
 						break;
-							// 38 parens2 = ')'
-						case ')':
+						// 38 parens2 = ')'
+					case ')':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "parens2"));
 						break;
-							// Other punctuation
-							// 41 aster = '*'
-						case '*':
+						// Other punctuation
+						// 41 aster = '*'
+					case '*':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "aster"));
 						break;
-							// 42 caret = '^'
-						case '^':
+						// 42 caret = '^'
+					case '^':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "caret"));
 						break;
-							// 43 colon = ':'
-						case ':':
+						// 43 colon = ':'
+					case ':':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "colon"));
 						break;
-							// 44 dot = '.'
-						case '.':
+						// 44 dot = '.'
+					case '.':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "angle1"));
 						break;
-							// 45 equal = '='
-						case '=':
+						// 45 equal = '='
+					case '=':
 						if (lines[i][_char + 1] == '=') {
-								// 52 opeq = "=="
+							// 52 opeq = "=="
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "opeq"));
 						}
@@ -205,11 +209,11 @@ public:
 							TokenList.push_back(tokenate(currLine, "equal"));
 						}
 						break;
-							// 46 minus = '-'
-							//May need to include with number check
-						case '-':
+						// 46 minus = '-'
+						//May need to include with number check
+					case '-':
 						if (lines[i][_char + 1] == '>') {
-								// 51 oparrow = "->"
+							// 51 oparrow = "->"
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "oparrow"));
 						}
@@ -218,19 +222,19 @@ public:
 							TokenList.push_back(tokenate(currLine, "minus"));
 						}
 						break;
-							// 47 plus = '+'
-						case '+':
+						// 47 plus = '+'
+					case '+':
 						currTokenIndex++;
 						TokenList.push_back(tokenate(currLine, "plus"));
 						break;
-							// 53 opne = "!="
-						case '!':
+						// 53 opne = "!="
+					case '!':
 						if (lines[i][_char + 1] == '=') {
 							currTokenIndex++;
 							TokenList.push_back(tokenate(currLine, "opne"));
 						}
 						break;
-						default:
+					default:
 						break;
 					}
 				}
@@ -316,5 +320,3 @@ Token tokenate(int ln, string id) {
 
 	return tkn;
 }
-
-};
