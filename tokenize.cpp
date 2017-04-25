@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 //	========  Function Prototypes  ========
 vector<Token> tokenize(vector<string> lines);
 bool isLetter(char c, bool firstChar);
