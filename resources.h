@@ -26,7 +26,6 @@ string keyWord[KEY_WORD_SIZE] = { "prog", "main", "fcn", "class",
 "print" };
 
 //	========  Function Prototypes  ========
-struct Token;						//	Struct for the Token type
 void printer();						//	Prints all accumulated and formatted tokens
 string txt_to_strings();			//	Converts a text file to a vector of strings
 void print_tokens(vector<Token> &t);
@@ -34,13 +33,6 @@ void tokenize(string s);            // a function to derive tokens from a string
 Token tokenate();                   // takes current variables to create a token
 Token peek_token();
 Token next_token();
-
-struct Token {
-	int ln;			// line number
-	string id;		// id based on grammar
-	int ix;			// optional; index number
-	string str;		// optional; actual string
-};
 
 vector<string> txt_to_strings(string txt_file) {	//	Convert an input txt file to a string with newline characters
 	vector<string> strings;		// This is what our function will return

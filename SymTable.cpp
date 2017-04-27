@@ -1,8 +1,13 @@
+#include <string>
+#include <list>
+
+using namespace std;
+
 struct occurence {
     int lineNum;
     int tokenNum;
     bool isDef;
-}
+};
 
 class Sym {
     int ix;
