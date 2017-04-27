@@ -1,7 +1,6 @@
 #include "Tokenizer.cpp"
 #include "token.h"
 #include "Parser.cpp"
-#include "resources.h"
 #include "txt_to_strings.cpp"
 #include "token_printer.cpp"
 

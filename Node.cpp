@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include "Symbol.cpp"
 
@@ -14,7 +16,7 @@ public:
     ~Node();
 
     void insert(Node* newChild) {
-        children.insert(newChild);
+        //children.insert(newChild);  ------------ERROR
     }
 
 	list<Node*> getChildren() {
@@ -23,15 +25,16 @@ public:
 
     Node find(string node) {
         if (children.empty()) {
-            if (content.name == node) {			// Please comment on the logic of this if statement, not sure I undersand it
-                return content
-            } else {
-                return NULL;
-            }
+   //         if (content.name == node) {			----------Error
+   //             return content
+   //         } 
+			//else {
+   //             return NULL;
+   //         }
         }
 
-        for (int i = 0; i < children.size(); ++i){
-            children[i].find(node);
+        for (size_t i = 0; i < children.size(); ++i){
+            //children[i].find(node);						-----------Error
         }
 
 
