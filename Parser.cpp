@@ -18,7 +18,7 @@ class Parser {
 	vector<Token> tokenList;
 
 	Parser(Grammar rGmr) {
-		gmr = rGmr;
+		//gmr = rGmr;							------ERROR
 		//symTable = new SymTable();			------ERROR
 	}
 

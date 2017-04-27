@@ -5,8 +5,11 @@
 using namespace std;
 
 class Symbol {
+
     string name;
-    bool isTerminal;
+    
+	bool isTerminal;
+
 public:
 
 	Symbol() {
@@ -24,17 +27,19 @@ public:
     } 
 };
 
+
 class Terminal : public Symbol {
     Token* token;
 public:
     Terminal(string rName, list<Token> rToken) : Symbol(rName, true) {
-        token = rToken;
+        //token = rToken;													------ERROR
     }
     Terminal(string rName) : Symbol(rName, true) {
     }
     ~Terminal();
     
 };
+
 
 class NonTerminal : public Symbol {
     list<Symbol> rhs;
