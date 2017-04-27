@@ -5,6 +5,7 @@
 #include "Grammar.cpp"
 #include "SymTable.cpp"
 #include "Node.cpp"
+#include <stack>
 
 
 using namespace std;
@@ -18,11 +19,11 @@ class Parser {
 
 	Parser(Grammar rGmr) {
 		gmr = rGmr;
-		symTable = new SymTable();
+		//symTable = new SymTable();			------ERROR
 	}
 
 	Parser() {
-		gmr = new Grammar();
+		//gmr = new Grammar();					------ERROR
 	}
 
 	/**
@@ -40,35 +41,35 @@ class Parser {
 	void makePST() {
 		// Setup:
 		stack<Symbol> workingStack;
-		list<Token> inputStream(tokenList);
+		//list<Token> inputStream(tokenList);				--------ERROR
 
-		workingStack.push(Symbol("$"));		// Add the eof symbol
-		inputStream.push_back(Token("$"));	// Add the eof token
+		//workingStack.push(Symbol("$"));		// Add the eof symbol		------ERROR
+		//inputStream.push_back(Token("$"));	// Add the eof token		------ERROR
 
-		workingStack.push(Symbol("Pgm"));	// Add the start symbol
+		//workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
 		// pst = new Node(workingStack.top());
 
 		while(!workingStack.empty()) {
 			// int i = 0;
 			Symbol top = workingStack.top();
-			Token front = inputStream.front();
+			//Token front = inputStream.front();							------ERROR
 
-			if(top.isTerminal()) {
-				if(top.name != front.id) {
-					// TODO: throw an error
-					// Error: epected x, found y, line front.line
-				}
-			}
+			//if(top.isTerminal()) {										------ERROR
+			//	if(top.name != front.id) {
+			//		// TODO: throw an error
+			//		// Error: epected x, found y, line front.line
+			//	}
+			//}
 
 			// M1:
-			list<Symbol> rule = gmr.getRule(top.name, front.id);
+			list<Symbol> rule;// = gmr.getRule(top.name, front.id);			------ERROR
 			if(!rule.empty()) {
 				// Remove the top symbol from stack
 				workingStack.pop();
 				
 				// Add the rule backwards
 				for (int i = rule.size() - 1; i >= 0; --i) {
-					workingStack.push(rule[i]);
+					//workingStack.push(rule[i]);							------ERROR
 				}
 
 				// Reassign the top variable
