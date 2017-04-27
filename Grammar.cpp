@@ -1,15 +1,23 @@
+#pragma once;
+
 #include <list>
 #include <map>
 #include "Symbol.cpp"
+#include <string>
+
+using namespace std;
 
 class Rule {
-    Symbol lhs;
-    list<Symbol> rhs;
+    
+	Symbol lhs;
+   
+	list<Symbol> rhs;
 
-    Rule(Symbol rLhs, list<Symbol> rRhs){
+    Rule(Symbol rLhs, list<Symbol> rRhs) {
         lhs = rLhs;
         rhs = rRhs;
     }
+
     ~Rule();
 
     list<Symbol> rhsReversed() {
@@ -23,14 +31,58 @@ class Rule {
 class Grammar {
     static map<string, Symbol> rules;
 
+	const string terminals[24] = {
+		"kwdprog",
+		"kwdinput",
+		"kwdprint",
+		"kwdwhile",
+		"kwdif",
+		"kwdelseif",
+		"kwdelse",
+		"paren1",
+		"paren2",
+		"brace1",
+		"brace2",
+		"comma",
+		"semi",
+		"equal",
+		"plus",
+		"minus",
+		"aster",
+		"slash",
+		"caret",
+		"id",
+		"int",
+		"float",
+		"string",
+		"$"
+	};
 
+	/*const map<string, Symbol> map = {		------ERROR
+		"Pgm",
+		"Block",
+		"Stmts",
+		"Stmt",
+		"Astmt",
+		"Y",
+		"Ostmt",
+		"Wstmt",
+		"Fstmt",
+		"Else2",
+		"Elist",
+		"Elist2",
+		'R',
+		'E',
+		'S',
+		'T',
+		'F',
+		"Pexpr",
+		"Fatom",
+		"Opadd",
+		"Opmul"
+	};*/
 
-
-
-
-
-
-	static char terminals[] = {
+	/*const array<Rule,25> rules = {	------ERROR
 		"kwdprog",
 		"kwdinput",
 		"kwdprint",
@@ -55,60 +107,9 @@ class Grammar {
 		"float",
 		"string",
 		'$'
-	};
+	};*/
 
-		static map<string, Symbol> mapp = {
-			"Pgm",
-			"Block",
-			"Stmts",
-			"Stmt",
-			"Astmt",
-			"Y",
-			"Ostmt",
-			"Wstmt",
-			"Fstmt",
-			"Else2",
-			"Elist",
-			"Elist2",
-			'R',
-			'E',
-			'S',
-			'T',
-			'F',
-			"Pexpr",
-			"Fatom",
-			"Opadd",
-			"Opmul"
-	};
-
-		static const array<Rule,25> rules = {
-			"kwdprog",
-			"kwdinput",
-			"kwdprint",
-			"kwdwhile",
-			"kwdif",
-			"kwdelseif",
-			"kwdelse",
-			"paren1",
-			"paren2",
-			"brace1",
-			"brace2",
-			"comma",
-			"semi",
-			"equal",
-			"plus",
-			"minus",
-			"aster",
-			"slash",
-			"caret",
-			'id',
-			'int',
-			"float",
-			"string",
-			'$'
-		};
-
- void createRules() {
+ /*void createRules() {										------ERROR
     rules["Opmul"] = Terminal("Opmul");  
     rules["Opadd"] = Terminal("Opadd");  
     rules["Fatom"] =   NonTerminal("Fatom",    );  
@@ -155,11 +156,11 @@ class Grammar {
     rules["Fatom"] = NonTerminal("Fatom", );
     rules["Opadd"] = NonTerminal("Opadd", );
     rules["Opmul"] = NonTerminal("Opmul", );
- }   
+ }  */ 
 
 public:
     Grammar() {
-        createRules();
+        //createRules();
     }
     ~Grammar();
 

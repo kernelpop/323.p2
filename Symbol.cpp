@@ -8,6 +8,11 @@ class Symbol {
     string name;
     bool isTerminal;
 public:
+
+	Symbol() {
+
+	}
+
     Symbol(string rName, bool rIsTerminal) {
         name = rName;
         isTerminal = rIsTerminal;
