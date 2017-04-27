@@ -1,18 +1,22 @@
 #pragma once
 
 #include <string>
+#include <list>
 #include "Symbol.cpp"
 
 using namespace std;
 
 class Node {
-    Symbol* content;
+    //Symbol* content;
     Node* parent;
     list<Node*> children;
 public:
-    Node(Symbol * rContent) {
+	Node() {
+
+	}
+    /*Node(Symbol * rContent) {			-----------ERROR
         content = rContent;
-    }
+    }*/
     ~Node();
 
     void insert(Node* newChild) {

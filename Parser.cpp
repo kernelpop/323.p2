@@ -27,20 +27,20 @@ class Parser {
 	}
 
 	/**
-	    Add a list of Token to be parsed
+		Add a list of Token to be parsed
 
-	    @param tokenList a vector list of the tokens to parse
+		@param tokenList a vector list of the tokens to parse
 	*/
 	void addTokensToParse(vector<Token> rTokenList) {
 		tokenList = rTokenList;
 	}
 
 	/**
-	    Make a Parse Tree from the current token list.
+		Make a Parse Tree from the current token list.
 	*/
 	void makePST() {
 		// Setup:
-		stack<Symbol> workingStack;
+		//stack<Symbol> workingStack;
 		//list<Token> inputStream(tokenList);				--------ERROR
 
 		//workingStack.push(Symbol("$"));		// Add the eof symbol		------ERROR
@@ -49,79 +49,80 @@ class Parser {
 		//workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
 		// pst = new Node(workingStack.top());
 
-		while(!workingStack.empty()) {
-			// int i = 0;
-			Symbol top = workingStack.top();
-			//Token front = inputStream.front();							------ERROR
+	//	while(!workingStack.empty()) {
+	//		// int i = 0;
+	//		//Symbol top = workingStack.top();								------ERROR
+	//		//Token front = inputStream.front();							------ERROR
 
-			//if(top.isTerminal()) {										------ERROR
-			//	if(top.name != front.id) {
-			//		// TODO: throw an error
-			//		// Error: epected x, found y, line front.line
-			//	}
-			//}
+	//		//if(top.isTerminal()) {										------ERROR
+	//		//	if(top.name != front.id) {
+	//		//		// TODO: throw an error
+	//		//		// Error: epected x, found y, line front.line
+	//		//	}
+	//		//}
 
-			// M1:
-			list<Symbol> rule;// = gmr.getRule(top.name, front.id);			------ERROR
-			if(!rule.empty()) {
-				// Remove the top symbol from stack
-				workingStack.pop();
-				
-				// Add the rule backwards
-				for (int i = rule.size() - 1; i >= 0; --i) {
-					//workingStack.push(rule[i]);							------ERROR
-				}
+	//		// M1:
+	//		list<Symbol> rule;// = gmr.getRule(top.name, front.id);			------ERROR
+	//		if(!rule.empty()) {
+	//			// Remove the top symbol from stack
+	//			workingStack.pop();
+	//			
+	//			// Add the rule backwards
+	//			for (int i = rule.size() - 1; i >= 0; --i) {
+	//				//workingStack.push(rule[i]);							------ERROR
+	//			}
 
-				// Reassign the top variable
-				top = workingStack.top();
-			} else {
-				// The rule is empty => there is no prediction for this
+	//			// Reassign the top variable
+	//			//top = workingStack.top();									------ERROR
+	//		} else {
+	//			// The rule is empty => there is no prediction for this
 
-				// TODO: throw an error
-				// Error: unexpected token found, line front.line
-			}
+	//			// TODO: throw an error
+	//			// Error: unexpected token found, line front.line
+	//		}
 
-			// M2
-			// else if(top.isTerminal {
-			// 	Error();
-			// }
+	//		// M2
+	//		// else if(top.isTerminal {
+	//		// 	Error();
+	//		// }
 
-			// // M3
-			// else if(gmr.getRule(top, front).isEmpty()){
-			// 	Error();
-			// }
+	//		// // M3
+	//		// else if(gmr.getRule(top, front).isEmpty()){
+	//		// 	Error();
+	//		// }
 
-			// // M4
-			// else if(!gmr.getRule(top, front).isEmpty()) {
-			// 	workingStack.pop();
-			// 	workingStack.push(gmr.getRule(top, front).reverse());
+	//		// // M4
+	//		// else if(!gmr.getRule(top, front).isEmpty()) {
+	//		// 	workingStack.pop();
+	//		// 	workingStack.push(gmr.getRule(top, front).reverse());
 
-			// }
-			// else {
-			// 	printStatus();
-			// }
-		}
-	}
+	//		// }
+	//		// else {
+	//		// 	printStatus();
+	//		// }
+	//	}
+	//}
 
-	void makeAST() {
+	/*void makeAST() {
 
-	}
+	}*/
 
 	/**
-	    Take the tree and create a printable represenation of it
+		Take the tree and create a printable represenation of it
 
-	    @param tree a node pointer to the tree to serialize
+		@param tree a node pointer to the tree to serialize
 	*/
-	string serializeTree(Node* tree) {
-		
-		if (tree->getChildren.empty()) {	// If the tree has no children, return a null string
-			return "";
-		}
+	//string serializeTree(Node* tree) {
+	//	
+	//	//if (tree->getChildren.empty()) {	// If the tree has no children, return a null string		------ERROR
+	//	//	return "";
+	//	//}
 
-		if (tree->getChildren[5]) {
+	//	//if (tree->getChildren[5]) {
 
-		}
+	//	//}
 
-	}
+	//}
 
+	};
 };
