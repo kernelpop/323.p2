@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 
 #include <list>
 #include <map>
@@ -8,9 +8,9 @@
 using namespace std;
 
 class Rule {
-    
+
 	Symbol lhs;
-   
+
 	list<Symbol> rhs;
 
     Rule(Symbol rLhs, list<Symbol> rRhs) {
@@ -25,7 +25,7 @@ class Rule {
         reversed.reverse();
         return reversed;
     }
-    
+
 };
 
 class Grammar {
@@ -110,26 +110,26 @@ class Grammar {
 	};*/
 
  /*void createRules() {										------ERROR
-    rules["Opmul"] = Terminal("Opmul");  
-    rules["Opadd"] = Terminal("Opadd");  
-    rules["Fatom"] =   NonTerminal("Fatom",    );  
-    rules["Pexpr"] =   NonTerminal("Pexpr",    );  
-    rules['F'] =   NonTerminal("F",    );  
-    rules['T'] =   NonTerminal("T",    );  
-    rules['S'] =   NonTerminal("S",    );  
-    rules['E'] =   NonTerminal("E",    );  
-    rules['R'] =   NonTerminal("R",    );  
-    rules["Elist2"]    =   NonTerminal("Elist2",   );  
-    rules["Elist"] =   NonTerminal("Elist",    );  
-    rules["Else2"] =   NonTerminal("Else2",    );  
-    rules["Fstmt"] =   NonTerminal("Fstmt",    );  
-    rules["Wstmt"] =   NonTerminal("Wstmt",    );  
-    rules["Ostmt"] =   NonTerminal("Ostmt",    );  
-    rules['Y'] =   NonTerminal("Y",    );  
-    rules["Astmt"] =   NonTerminal("Astmt",    );  
-    rules["Stmt"]  =   NonTerminal("Stmt", );  
-    rules["Stmts"]  =   NonTerminal("Stmts",    );  
-    rules["Block"] =   NonTerminal("Block",    );  
+    rules["Opmul"] = Terminal("Opmul");
+    rules["Opadd"] = Terminal("Opadd");
+    rules["Fatom"] =   NonTerminal("Fatom",    );
+    rules["Pexpr"] =   NonTerminal("Pexpr",    );
+    rules['F'] =   NonTerminal("F",    );
+    rules['T'] =   NonTerminal("T",    );
+    rules['S'] =   NonTerminal("S",    );
+    rules['E'] =   NonTerminal("E",    );
+    rules['R'] =   NonTerminal("R",    );
+    rules["Elist2"]    =   NonTerminal("Elist2",   );
+    rules["Elist"] =   NonTerminal("Elist",    );
+    rules["Else2"] =   NonTerminal("Else2",    );
+    rules["Fstmt"] =   NonTerminal("Fstmt",    );
+    rules["Wstmt"] =   NonTerminal("Wstmt",    );
+    rules["Ostmt"] =   NonTerminal("Ostmt",    );
+    rules['Y'] =   NonTerminal("Y",    );
+    rules["Astmt"] =   NonTerminal("Astmt",    );
+    rules["Stmt"]  =   NonTerminal("Stmt", );
+    rules["Stmts"]  =   NonTerminal("Stmts",    );
+    rules["Block"] =   NonTerminal("Block",    );
     rules["Pgm"]   =   NonTerminal("Pgm",  {Terminal("kwdp"),  NonTerminal("Block")});
 
 
@@ -156,7 +156,7 @@ class Grammar {
     rules["Fatom"] = NonTerminal("Fatom", );
     rules["Opadd"] = NonTerminal("Opadd", );
     rules["Opmul"] = NonTerminal("Opmul", );
- }  */ 
+ }  */
 
 public:
     Grammar() {
@@ -169,5 +169,5 @@ public:
     Rule getRuleAt(string top, string next) {
 
     }
-    
+
 };
