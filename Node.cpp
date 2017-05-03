@@ -2,7 +2,7 @@
 
 #include <string>
 #include <list>
-#include "Symbol.cpp"
+// #include "Symbol.cpp"
 
 using namespace std;
 
@@ -41,7 +41,7 @@ public:
             //children[i].find(node);						-----------Error
         }
 
-
+        return Node();
 
     }
 
@@ -50,7 +50,7 @@ public:
     }
 
     string toString() {
-
+        return "hello world";
     }
     
 };

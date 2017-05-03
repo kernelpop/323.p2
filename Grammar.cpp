@@ -10,11 +10,14 @@ class Rule {
 	Symbol lhs;
 
 	list<Symbol> rhs;
-
+    
+public:
     Rule(Symbol rLhs, list<Symbol> rRhs) {
         lhs = rLhs;
         rhs = rRhs;
     }
+
+    Rule() {}
 
     ~Rule();
 
@@ -29,32 +32,32 @@ class Rule {
 class Grammar {
     static map<string, Symbol> rules;
 
-	const string terminals[24] = {
-		"kwdprog",
-		"kwdinput",
-		"kwdprint",
-		"kwdwhile",
-		"kwdif",
-		"kwdelseif",
-		"kwdelse",
-		"paren1",
-		"paren2",
-		"brace1",
-		"brace2",
-		"comma",
-		"semi",
-		"equal",
-		"plus",
-		"minus",
-		"aster",
-		"slash",
-		"caret",
-		"id",
-		"int",
-		"float",
-		"string",
-		"$"
-	};
+	// static const string terminals[24] = {
+	// 	"kwdprog",
+	// 	"kwdinput",
+	// 	"kwdprint",
+	// 	"kwdwhile",
+	// 	"kwdif",
+	// 	"kwdelseif",
+	// 	"kwdelse",
+	// 	"paren1",
+	// 	"paren2",
+	// 	"brace1",
+	// 	"brace2",
+	// 	"comma",
+	// 	"semi",
+	// 	"equal",
+	// 	"plus",
+	// 	"minus",
+	// 	"aster",
+	// 	"slash",
+	// 	"caret",
+	// 	"id",
+	// 	"int",
+	// 	"float",
+	// 	"string",
+	// 	"$"
+	// };
 
 	/*const map<string, Symbol> map = {		------ERROR
 		"Pgm",
@@ -165,7 +168,7 @@ public:
     //create
 
     Rule getRuleAt(string top, string next) {
-
+        return Rule();
     }
 
 };
