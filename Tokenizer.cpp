@@ -1,36 +1,44 @@
 #include <iostream>
 #include <regex>
 #include "token.h"
+#include "txt_to_strings.cpp"
+#include "token_printer.cpp"
 
 using namespace std;
 
-//	========  Variables  ========
-const int KEY_WORD_SIZE = 13;
-string keyWord[KEY_WORD_SIZE] = { "prog", "main", "fcn", "class",
-"float", "int", "string", "if",
-"elseif", "else", "while", "input",
-"print" };
-
-//	========  Function Prototypes  ========
-vector<Token> tokenize(vector<string> lines);
-bool isLetter(char c, bool firstChar);
-bool isNumber(char c, bool firstChar);
-string whichKwd(string s);
-string whichNumType(string s);
-Token tokenate(int ln, string id, int ix, string str);
-Token tokenate(int ln, string id, string str);
-Token tokenate(int ln, string id);
+static const int KEY_WORD_SIZE = 13;
 static const string NOTKWD("NOTKWD");
+static const string keyWord[KEY_WORD_SIZE] = { "prog", "main", "fcn", "class",
+	"float", "int", "string", "if",
+	"elseif", "else", "while", "input",
+	"print" };
 
 
-vector<Token> tokenize(vector<string> lines) {
-	vector<Token> TokenList = *new vector<Token>();
+class Tokenizer {
+	//	========  Variables  ========
+	vector<string> _Strings;
+	vector<Token> _Tokens;
+	string _Language;
+
+	//	========  Function Prototypes  ========
+	// vector<Token> tokenize(vector<string> lines);
+	// bool isLetter(char c, bool firstChar);
+	// bool isNumber(char c, bool firstChar);
+	// string whichKwd(string s);
+	// string whichNumType(string s);
+	// Token tokenate(int ln, string id, int ix, string str);
+	// Token tokenate(int ln, string id, string str);
+	// Token tokenate(int ln, string id);
+
+
+	vector<Token> tokenize(vector<string> lines) {
+		vector<Token> TokenList = *new vector<Token>();
 
 	// Vriables for token creation
-	int currLine = 0;
-	int currTokenIndex = 0;
-	string currID;
-	string currString;
+		int currLine = 0;
+		int currTokenIndex = 0;
+		string currID;
+		string currString;
 
 	if (!lines.empty()) {				// Make sure lines is not empty
 		for (size_t i = 0; i < lines.size(); i++) {            // Going through each line
@@ -77,179 +85,179 @@ vector<Token> tokenize(vector<string> lines) {
 					if (whichKwd(s) == NOTKWD) {         // If not a kwd then it's ident
 						currTokenIndex++;
 						// create token for ident
-						TokenList.push_back(tokenate(currLine, "ident", currTokenIndex, s));
-					}
-					else {
-						currTokenIndex++;
-						// create token for kwd
-						TokenList.push_back(tokenate(currLine, whichKwd(s)));
-					}
+					TokenList.push_back(tokenate(currLine, "ident", currTokenIndex, s));
 				}
-				else if (isNumber(lines[i][_char], true)) {
-					string intStr = string(1, lines[i][_char]);
-					_char++;
+				else {
+					currTokenIndex++;
+						// create token for kwd
+					TokenList.push_back(tokenate(currLine, whichKwd(s)));
+				}
+			}
+			else if (isNumber(lines[i][_char], true)) {
+				string intStr = string(1, lines[i][_char]);
+				_char++;
 
 					// ERROR Check: can't have -.1 need -0,1
-					while (isNumber(lines[i][_char], false)) {
-						intStr.append(string(1, lines[i][_char]));
-						_char++;
-					}
-					_char--;
+				while (isNumber(lines[i][_char], false)) {
+					intStr.append(string(1, lines[i][_char]));
+					_char++;
+				}
+				_char--;
 					if (whichNumType(intStr) == "int") {         // If not a float it's int
 						currTokenIndex++;
 						// create token for int
-						TokenList.push_back(tokenate(currLine, "int", intStr));
-					}
-					else if (whichNumType(intStr) == "float") {
-						currTokenIndex++;
-						// create token for float
-						TokenList.push_back(tokenate(currLine, "float", intStr));
-					}
+					TokenList.push_back(tokenate(currLine, "int", intStr));
 				}
-				else {
-					switch (lines[i][_char]) {
+				else if (whichNumType(intStr) == "float") {
+					currTokenIndex++;
+						// create token for float
+					TokenList.push_back(tokenate(currLine, "float", intStr));
+				}
+			}
+			else {
+				switch (lines[i][_char]) {
 						// Paired delimeters
 						// 6 comma = ','
 					case ',':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "comma"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "comma"));
+					break;
 						// 7 semi = ';'
 					case ';':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "semi"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "semi"));
+					break;
 						// 31 angle1 = '<'
 					case '<':
-						if (lines[i][_char + 1] == '=') {
+					if (lines[i][_char + 1] == '=') {
 							// 54 ople = "<="
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "ople"));
-						}
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "ople"));
+					}
 						// 56 opshl = "<<"
-						else if (lines[i][_char + 1] == '<') {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "opshl"));
-						}
-						else {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "angle1"));
-						}
-						break;
+					else if (lines[i][_char + 1] == '<') {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "opshl"));
+					}
+					else {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "angle1"));
+					}
+					break;
 						// 32 angle2 = '>'
 					case '>':
-						if (lines[i][_char + 1] == '=') {
+					if (lines[i][_char + 1] == '=') {
 							// 55 opge = ">="
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "opge"));
-						}
-						else if (lines[i][_char + 1] == '>') {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "opge"));
+					}
+					else if (lines[i][_char + 1] == '>') {
 							// 57 opshr = ">>"
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "opshr"));
-						}
-						else {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "angle2"));
-						}
-						break;
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "opshr"));
+					}
+					else {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "angle2"));
+					}
+					break;
 						// 33 brace1 = '{'
 					case '{':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "brace1"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "brace1"));
+					break;
 						// 34 brace2 = '}'
 					case '}':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "brace2"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "brace2"));
+					break;
 						// 35 bracket1 = '['
 					case '[':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "bracket1"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "bracket1"));
+					break;
 						// 36 bracket2 = ']'
 					case ']':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "bracket2"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "bracket2"));
+					break;
 						// 37 parens1 = '('
 					case '(':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "parens1"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "parens1"));
+					break;
 						// 38 parens2 = ')'
 					case ')':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "parens2"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "parens2"));
+					break;
 						// Other punctuation
 						// 41 aster = '*'
 					case '*':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "aster"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "aster"));
+					break;
 						// 42 caret = '^'
 					case '^':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "caret"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "caret"));
+					break;
 						// 43 colon = ':'
 					case ':':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "colon"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "colon"));
+					break;
 						// 44 dot = '.'
 					case '.':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "angle1"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "angle1"));
+					break;
 						// 45 equal = '='
 					case '=':
-						if (lines[i][_char + 1] == '=') {
+					if (lines[i][_char + 1] == '=') {
 							// 52 opeq = "=="
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "opeq"));
-						}
-						else {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "equal"));
-						}
-						break;
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "opeq"));
+					}
+					else {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "equal"));
+					}
+					break;
 						// 46 minus = '-'
 						//May need to include with number check
 					case '-':
-						if (lines[i][_char + 1] == '>') {
+					if (lines[i][_char + 1] == '>') {
 							// 51 oparrow = "->"
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "oparrow"));
-						}
-						else {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "minus"));
-						}
-						break;
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "oparrow"));
+					}
+					else {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "minus"));
+					}
+					break;
 						// 47 plus = '+'
 					case '+':
-						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "plus"));
-						break;
+					currTokenIndex++;
+					TokenList.push_back(tokenate(currLine, "plus"));
+					break;
 						// 53 opne = "!="
 					case '!':
-						if (lines[i][_char + 1] == '=') {
-							currTokenIndex++;
-							TokenList.push_back(tokenate(currLine, "opne"));
-						}
-						break;
-					default:
-						break;
+					if (lines[i][_char + 1] == '=') {
+						currTokenIndex++;
+						TokenList.push_back(tokenate(currLine, "opne"));
 					}
+					break;
+					default:
+					break;
 				}
 			}
 		}
 	}
+}
 
-	return TokenList;
+return TokenList;
 }
 
 bool isLetter(char c, bool firstChar) {
@@ -327,3 +335,21 @@ Token tokenate(int ln, string id) {
 
 	return tkn;
 }
+public:
+	Tokenizer(string language, string file){
+		_Strings = txt_to_strings(file);
+		_Language = language;
+	}
+
+	~Tokenizer(){}
+
+	vector<Token> tokenize() {
+		_Tokens = tokenize(_Strings);
+		return _Tokens;
+	}
+
+	void printTokens() {
+		token_printer(_Language, _Tokens);
+	}
+
+};
