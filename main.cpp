@@ -1,10 +1,6 @@
 #include "Tokenizer.cpp"
-#include "token.h"
 #include "Parser.cpp"
-#include "txt_to_strings.cpp"
-#include "token_printer.cpp"
 #include <vector>
-
 
 using namespace std;
 
@@ -12,13 +8,10 @@ using namespace std;
 //	========  Global Variables  ========
 string _Language = "A3";
 string Test_File = "test_X.txt";
-vector<Token> _Tokens;
-vector<string> _Strings;
-
 
 //	========  Function Prototypes  ========
-void runParser(vector<Token>);
-
+vector<Token> runTokenizer(string file);
+void runParser(vector<Token> tokenList);
 
 int main() {
 	
@@ -34,8 +27,7 @@ int main() {
 			break;
 		}
 
-		Test_File = "test_" + to_string(x) + ".txt";
-		
+		Test_File = "./tests/test_" + to_string(x) + ".txt";
 
 		if (!cin.fail()) {	
 
@@ -45,17 +37,8 @@ int main() {
 				
 				cout << "========  Start Test - " << Test_File << " ========" << endl;
 
-				_Strings = txt_to_strings(Test_File);
-
-				_Tokens = tokenize(_Strings);
-
-				token_printer(_Language, _Tokens);
-
-				runParser(_Tokens);
-
-				_Strings.clear();
-
-				_Tokens.clear();
+				vector<Token> tokens = runTokenizer(Test_File);
+				runParser(tokens);
 
 				cout << "========  End Test  ========" << endl;
 				
@@ -84,3 +67,31 @@ int main() {
 	return 0;
 
 }
+
+vector<Token> runTokenizer(string file) {
+
+	cout << ">>> Tokenizer Running" << endl;
+
+	Tokenizer tokenizer(_Language, file);
+
+	vector<Token> t = tokenizer.tokenize();
+
+	tokenizer.printTokens();
+
+	cout << ">>> Tokenizer Done" << endl;
+
+	return t;
+}
+
+
+void runParser(vector<Token> tokenList) {
+
+	cout << endl << ">>> Parser Running" << endl;
+
+	for (int i = 0; i < tokenList.size(); ++i) {
+		cout << tokenList[i].id << endl;
+	}
+
+	cout << ">>> Parser Done" << endl;
+}
+
