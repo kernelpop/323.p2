@@ -138,12 +138,12 @@ void runParser(vector<token> tokenList) {
 
 cout << "created temp list";
 
-	for(int i = 0; i < temp.size(); i++) {
+	for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
 		cout << t.getName() << endl;
 	} 
 
-	for(int i = 0; i < temp2.size(); i++) {
+	for(size_t i = 0; i < temp2.size(); i++) {
 		symbol t = *g.nonTerminals[temp2[i]];
 		cout << t.getName() << endl;
 	}
