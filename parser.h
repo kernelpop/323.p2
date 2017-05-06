@@ -29,6 +29,10 @@ public:
 	Parser() {
 		gmr = new Grammar();		//			------ERROR
 	}
+
+	void print_table() {
+		symTable.print_table();
+	}
 	
 	void addTokensToParse(vector<token> rTokenList) {
 		tokenList = rTokenList;

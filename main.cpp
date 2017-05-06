@@ -69,21 +69,21 @@ int main() {
 	return 0;
 }
 
-
 void runParser(vector<token> tokenList) {
+	
 	cout << endl << ">>> Parser Running" << endl;
 
-	// for (int i = 0; i < tokenList.size(); ++i) {
-	// 	cout << tokenList[i].id << endl;
-	// }
+	for (size_t i = 0; i < tokenList.size(); ++i) {
+		cout << tokenList[i].id << endl;
+	}
 
 	Parser parser;
 
-	cout << "parser created." << endl;
+	cout << "Parser created" << endl;
 
 	Grammar g = parser.getGmr();
 
-	cout << "Grammer created." << endl;
+	cout << "Grammar created." << endl;
 
 	vector<string> temp;
 
@@ -136,7 +136,7 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-cout << "created temp list";
+	cout << "Created temp list" << endl;
 
 	for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -148,10 +148,12 @@ cout << "created temp list";
 		cout << t.getName() << endl;
 	}
 
-	list<Rule*> rules = g.rules;
+	/*list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		cout << (*it)->printRule() << endl;
-	}
+	}*/
+
+	parser.print_table();
 
 	cout << ">>> Parser Done" << endl;
 }
