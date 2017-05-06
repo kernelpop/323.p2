@@ -32,11 +32,11 @@ public:
 
 class SymTable {
 	list<Sym> table;
-	int size;	//Number of symbols the table is holding
+	int height;	//Number of symbols the table is holding
 	int width;
 public:
 	SymTable() {
-		size = 0;
+		height = 1;
 		width = 30;
 	};
 	~SymTable() {
@@ -45,7 +45,7 @@ public:
 	void print_table() {
 		print_row();	//Print top of table
 		
-		for (int i = 0; i < 20; i++) {		//	Will be rewritten once table is filled with content
+		for (int i = 0; i < height; i++) {		//	Will be rewritten once table is filled with content
 			cout << '|';
 			for (int i = 0; i < width; i++) {
 				cout << ' ';
