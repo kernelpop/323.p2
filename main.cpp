@@ -4,6 +4,8 @@
 #include <vector>
 #include "txt_to_strings.h"
 #include "token.h"
+#include "parser.h"
+#include "symbol.h"
 
 using namespace std;
 
@@ -11,6 +13,8 @@ string Test_File = "test_X.txt";
 vector<string> _Strings;
 vector<token> _Tokens;
 string _Language = "A3";
+
+void runParser(vector<token> tokenList);
 
 int main() {
 	int x = 0;
@@ -20,7 +24,7 @@ int main() {
 		if (x < 0) {
 			break;
 		}
-		Test_File = "test_" + to_string(x) + ".txt";
+		Test_File = "./tests/test_" + to_string(x) + ".txt";
 		if (!cin.fail()) {
 
 			ifstream f(Test_File.c_str());
@@ -35,7 +39,7 @@ int main() {
 
 				token_printer(_Language, _Tokens);
 
-				//runParser(_Tokens);
+				runParser(_Tokens);
 
 				_Strings.clear();
 
@@ -63,4 +67,91 @@ int main() {
 		}
 	}
 	return 0;
+}
+
+
+void runParser(vector<token> tokenList) {
+	cout << endl << ">>> Parser Running" << endl;
+
+	// for (int i = 0; i < tokenList.size(); ++i) {
+	// 	cout << tokenList[i].id << endl;
+	// }
+
+	Parser parser;
+
+	cout << "parser created." << endl;
+
+	Grammar g = parser.getGmr();
+
+	cout << "Grammer created." << endl;
+
+	vector<string> temp;
+
+	temp.push_back("kwdprog");
+	temp.push_back("kwdinput");
+	temp.push_back("kwdprint");
+	temp.push_back("kwdwhile");
+	temp.push_back("kwdif");
+	temp.push_back("kwdelseif");
+	temp.push_back("kwdelse");
+	temp.push_back("paren1");
+	temp.push_back("paren2");
+	temp.push_back("brace1");
+	temp.push_back("brace2");
+	temp.push_back("comma");
+	temp.push_back("semi");
+	temp.push_back("equal");
+	temp.push_back("plus");
+	temp.push_back("minus");
+	temp.push_back("aster");
+	temp.push_back("slash");
+	temp.push_back("caret");
+	temp.push_back("id");
+	temp.push_back("int");
+	temp.push_back("float");
+	temp.push_back("string");
+	temp.push_back("$");
+
+	vector<string> temp2;
+
+	temp2.push_back("Opmul");
+	temp2.push_back("Opadd");
+	temp2.push_back("Fatom");
+	temp2.push_back("Pexpr");
+	temp2.push_back("F");
+	temp2.push_back("T");
+	temp2.push_back("S");
+	temp2.push_back("E");
+	temp2.push_back("R");
+	temp2.push_back("Elist2");
+	temp2.push_back("Elist");
+	temp2.push_back("Else2");
+	temp2.push_back("Fstmt");
+	temp2.push_back("Wstmt");
+	temp2.push_back("Ostmt");
+	temp2.push_back("Y");
+	temp2.push_back("Astmt");
+	temp2.push_back("Stmt");
+	temp2.push_back("Stmts");
+	temp2.push_back("Block");
+	temp2.push_back("Pgm");
+
+cout << "created temp list";
+
+	for(int i = 0; i < temp.size(); i++) {
+		symbol t = *g.terminals[temp[i]];
+		cout << t.getName() << endl;
+	} 
+
+	for(int i = 0; i < temp2.size(); i++) {
+		symbol t = *g.nonTerminals[temp2[i]];
+		cout << t.getName() << endl;
+	}
+
+	list<Rule*> rules = g.rules;
+	for (auto it = rules.begin(); it != rules.end(); ++it) {
+		cout << (*it)->printRule() << endl;
+	}
+
+	cout << ">>> Parser Done" << endl;
 }
