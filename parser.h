@@ -13,11 +13,13 @@
 using namespace std;
 
 class Parser {
-	Grammar gmr;
+	Grammar* gmr;
 	Node* pst;
 	Node* ast;
 	SymTable symTable;
 	vector<token> tokenList;
+
+public:
 
 	Parser(Grammar rGmr) {
 		//gmr = rGmr;							------ERROR
@@ -25,7 +27,7 @@ class Parser {
 	}
 
 	Parser() {
-		//gmr = new Grammar();					------ERROR
+		gmr = new Grammar();		//			------ERROR
 	}
 	
 	void addTokensToParse(vector<token> rTokenList) {
@@ -33,7 +35,7 @@ class Parser {
 	}
 
 	void makePST() {
-		/*Setup:
+		/* Setup:
 		stack<Symbol> workingStack;
 		list<Token> inputStream(tokenList);				--------ERROR
 
@@ -97,11 +99,15 @@ class Parser {
 			}
 		}
 
-		/*void makeAST() {
+		 void makeAST() {
 		}
 		Take the tree and create a printable represenation of it
 		@param tree a node pointer to the tree to serialize
 		*/
-	};
+	}
+
+	Grammar getGmr() {
+		return *gmr;
+	}
 
 };
