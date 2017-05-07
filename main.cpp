@@ -81,9 +81,14 @@ void runParser(vector<token> tokenList) {
 
 	cout << "Parser created" << endl;
 
+	//	Send the generated tokens to the parse machine
+	parser.addTokensToParse(tokenList);
+
+	cout << "Tokens sent to parser" << endl;
+
 	Grammar g = parser.getGmr();
 
-	cout << "Grammar created." << endl;
+	cout << "Created grammar" << endl;
 
 	vector<string> temp;
 
@@ -138,20 +143,24 @@ void runParser(vector<token> tokenList) {
 
 	cout << "Created temp list" << endl;
 
-	for(size_t i = 0; i < temp.size(); i++) {
+	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
 		cout << t.getName() << endl;
-	} 
+	}*/ 
 
-	for(size_t i = 0; i < temp2.size(); i++) {
+	/*for(size_t i = 0; i < temp2.size(); i++) {
 		symbol t = *g.nonTerminals[temp2[i]];
 		cout << t.getName() << endl;
-	}
+	}*/
 
 	/*list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		cout << (*it)->printRule() << endl;
 	}*/
+
+	// Create PST
+	parser.makePST();
+	cout << "Created PST" << endl;
 
 	parser.print_table();
 
