@@ -114,9 +114,36 @@ public:
 		*/
 	}
 
+
+
 	//Take the tree and create a printable represenation of it
 	//@param tree a node pointer to the tree to serialize
 	void makeAST() {
+	}
+
+	//This is the print function of a PST tree.
+	//Implemented as a recursive pre-order function. 
+	//NOTE: this is unfinished
+	void printPST(Node * current)
+	{
+		if (current == nullptr)
+		{
+			cout << "null" << endl;
+			return;
+		}
+		/*else //may not be used
+		{
+			cout << current->getName() + " >>> ";
+
+		}*/
+		//for (int i = 0; i < current->getChildren().size(); ++i)
+		for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		{
+			cout << current->getSymbol()->getName() << " >>> ";
+			//printPST(current->it);
+		}
+		cout << endl;
+
 	}
 	
 	Grammar getGmr() {

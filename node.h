@@ -43,6 +43,11 @@ public:
 		children.remove(child);
 	}
 
+	symbol * getSymbol()
+	{
+		return content;
+	}
+
 	string toString() {
 		return "hello world";
 	}
