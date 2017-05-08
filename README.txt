@@ -18,7 +18,8 @@ txt_to_strings.h
 
 Installation/Run Info:  
 	Managing test cases:  
-		Place test files in the ./tests directory in the format "test_x.txt" where x is an integer value.  
+		Place test files in the ./tests directory in the format "test_x.txt" 
+		where x is an integer value.  
 	Using the program:  
 		Enter the integer value of of the test case you would like to run.
 
