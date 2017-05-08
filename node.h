@@ -7,14 +7,21 @@
 using namespace std;
 
 class Node {
+	
 	symbol* content;
+	
 	Node* parent;
+	
 	list<Node*> children;
+
 public:
+	
 	Node() {}
+	
 	Node(symbol * rContent) {
-	content = rContent;
+		content = rContent;
 	}
+	
 	~Node() {}
 
 	void insert(Node* newChild) {}

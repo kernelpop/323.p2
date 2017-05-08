@@ -35,10 +35,11 @@ public:
 	
 	void addTokensToParser(vector<token> _TokenList) {
 		tokenList = _TokenList;
-		cout << ">>> Parser received " << tokenList.size() << " token(s)" << endl;
+		cout << ">>>>>> Parser received " << tokenList.size() << " token(s)" << endl;
 	}
 
 	void makePST() {
+		
 		//	Setup
 		stack<symbol> workingStack;
 		
@@ -53,9 +54,10 @@ public:
 		// Add the start symbol
 		workingStack.push(symbol("Pgm",0));	
 				
-		/*
-		pst = new Node(workingStack.top());
+		//Node* pst = new Node(workingStack.top());
 
+		/*
+		
 			while(!workingStack.empty()) {
 				// int i = 0;
 				//Symbol top = workingStack.top();								------ERROR
