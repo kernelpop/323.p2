@@ -136,7 +136,7 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-cout << "created temp list";
+cout << "temp lists created";
 
 	for(int i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -148,9 +148,12 @@ cout << "created temp list";
 		cout << t.getName() << endl;
 	}
 
+	cout << endl << "Printing rules" << endl;
+
 	list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
-		cout << (*it)->printRule() << endl;
+		if((*it))
+			cout << (*it)->printRule() << endl;
 	}
 
 	cout << ">>> Parser Done" << endl;

@@ -21,7 +21,14 @@ public:
 
     Rule() {}
 
-    ~Rule() {}
+    ~Rule() {
+    	// delete lhs;
+    	// while(!rhs.empty()) {
+    	// 	delete rhs.front();
+    	// 	rhs.pop_front();
+    	// }
+
+    }
     
     string printRule() {
     	string s;
@@ -105,7 +112,7 @@ class Grammar {
     void createRules() {
     	list<symbol*> temp;
 
-    	rules.push_back(new Rule()); // no rule at index 0
+    	rules.push_back(NULL); // no rule at index 0
 
     	// Rule 1
     	temp.push_back(terminals["kwdprog"]);
@@ -340,7 +347,23 @@ public:
         createRules();
     }
 
-    ~Grammar() {}
+    ~Grammar() {
+    	for(auto it = terminals.begin(); it != terminals.end(); ++it) {
+    		delete it->second;
+    		terminals.erase(it);
+    	}
+
+    	for(auto it = nonTerminals.begin(); it != nonTerminals.end(); ++it) {
+    		delete it->second;
+    		nonTerminals.erase(it);
+    	}
+
+    	while(!rules.empty()) {
+    		delete rules.front();
+    		rules.pop_front();
+    	}
+
+    }
 
     Rule getRuleAt(string top, string next) {
         return Rule();

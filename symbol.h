@@ -47,7 +47,9 @@ public:
    Terminal(string rName) : symbol(rName, true) {
    }
 
-   ~Terminal() {}
+   ~Terminal() {
+    delete tkn;
+   }
    
 };
 
