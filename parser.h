@@ -21,13 +21,16 @@ class Parser {
 
 public:
 
-	Parser(Grammar rGmr) {
-		//gmr = rGmr;							------ERROR
-		//symTable = new SymTable();			------ERROR
+	Parser(Grammar* rGmr) {
+		gmr = rGmr;
 	}
 
 	Parser() {
-		gmr = new Grammar();		//			------ERROR
+		gmr = new Grammar();
+	}
+
+	void print_table() {
+		symTable.print_table();
 	}
 	
 	void addTokensToParse(vector<token> rTokenList) {
@@ -35,15 +38,17 @@ public:
 	}
 
 	void makePST() {
-		/* Setup:
-		stack<Symbol> workingStack;
-		list<Token> inputStream(tokenList);				--------ERROR
-
-		workingStack.push(Symbol("$"));		// Add the eof symbol		------ERROR
+		//	Setup
+		stack<symbol> workingStack;
+		
+		// Add the eof symbol
+		workingStack.push(symbol("$",0));		
+		
+		/*
 		inputStream.push_back(Token("$"));	// Add the eof token		------ERROR
 
 		workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
-		 pst = new Node(workingStack.top());
+		pst = new Node(workingStack.top());
 
 			while(!workingStack.empty()) {
 				// int i = 0;
@@ -99,7 +104,7 @@ public:
 			}
 		}
 
-		 void makeAST() {
+		void makeAST() {
 		}
 		Take the tree and create a printable represenation of it
 		@param tree a node pointer to the tree to serialize

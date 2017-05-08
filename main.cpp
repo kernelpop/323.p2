@@ -69,21 +69,26 @@ int main() {
 	return 0;
 }
 
-
 void runParser(vector<token> tokenList) {
+	
 	cout << endl << ">>> Parser Running" << endl;
 
-	// for (int i = 0; i < tokenList.size(); ++i) {
-	// 	cout << tokenList[i].id << endl;
-	// }
+	for (size_t i = 0; i < tokenList.size(); ++i) {
+		cout << tokenList[i].id << endl;
+	}
 
 	Parser parser;
 
-	cout << "parser created." << endl;
+	cout << "Parser created" << endl;
+
+	//	Send the generated tokens to the parse machine
+	parser.addTokensToParse(tokenList);
+
+	cout << "Tokens sent to parser" << endl;
 
 	Grammar g = parser.getGmr();
 
-	cout << "Grammer created." << endl;
+	cout << "Created grammar" << endl;
 
 	vector<string> temp;
 
@@ -136,17 +141,17 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-cout << "temp lists created";
+	cout << "Created temp list" << endl;
 
-	for(int i = 0; i < temp.size(); i++) {
+	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
 		cout << t.getName() << endl;
-	} 
+	}*/ 
 
-	for(int i = 0; i < temp2.size(); i++) {
+	/*for(size_t i = 0; i < temp2.size(); i++) {
 		symbol t = *g.nonTerminals[temp2[i]];
 		cout << t.getName() << endl;
-	}
+	}*/
 
 	cout << endl << "Printing rules" << endl;
 
@@ -155,6 +160,12 @@ cout << "temp lists created";
 		if((*it))
 			cout << (*it)->printRule() << endl;
 	}
+
+	// Create PST
+	parser.makePST();
+	cout << "Created PST" << endl;
+
+	parser.print_table();
 
 	cout << ">>> Parser Done" << endl;
 }
