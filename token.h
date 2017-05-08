@@ -368,5 +368,4 @@ void token_printer(string _Language, vector<token> &tokens) { // Prints out all 
 	}
 
 	cout << ")" << endl;	//	Finish the print function
-	tokens.clear();
 }

@@ -33,8 +33,9 @@ public:
 		symTable.print_table();
 	}
 	
-	void addTokensToParse(vector<token> rTokenList) {
-		tokenList = rTokenList;
+	void addTokensToParser(vector<token> _TokenList) {
+		tokenList = _TokenList;
+		cout << ">>> Parser received " << tokenList.size() << " token(s)" << endl;
 	}
 
 	void makePST() {
@@ -43,7 +44,7 @@ public:
 		
 		// Add the eof symbol
 		workingStack.push(symbol("$",0));		
-		
+
 		/*
 		inputStream.push_back(Token("$"));	// Add the eof token		------ERROR
 

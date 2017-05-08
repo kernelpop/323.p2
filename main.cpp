@@ -6,8 +6,13 @@
 #include "token.h"
 #include "parser.h"
 #include "symbol.h"
+#include <ctime>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace this_thread;
+using namespace chrono;
 
 string Test_File = "test_X.txt";
 vector<string> _Strings;
@@ -70,26 +75,23 @@ int main() {
 }
 
 void runParser(vector<token> tokenList) {
-	
-	cout << endl << ">>> Parser Running" << endl;
 
-	for (size_t i = 0; i < tokenList.size(); ++i) {
-		cout << tokenList[i].id << endl;
-	}
+	cout << endl << ">>> Parser Running" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 
 	Parser parser;
-
-	cout << "Parser created" << endl;
-
-	//	Send the generated tokens to the parse machine
-	parser.addTokensToParse(tokenList);
-
-	cout << "Tokens sent to parser" << endl;
+	cout << ">>> Created Parser object 'parser'" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 
 	Grammar g = parser.getGmr();
+	cout << ">>> Created grammar object 'g'" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 
-	cout << "Created grammar" << endl;
-
+	cout << ">>> Sending tokens to 'parser'" << endl;
+	sleep_until(system_clock::now() + seconds(1));
+	parser.addTokensToParser(tokenList);
+	sleep_until(system_clock::now() + seconds(1));
+	
 	vector<string> temp;
 
 	temp.push_back("kwdprog");
@@ -141,7 +143,8 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-	cout << "Created temp list" << endl;
+	cout << ">>> Created list 'temp'" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 
 	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -153,19 +156,20 @@ void runParser(vector<token> tokenList) {
 		cout << t.getName() << endl;
 	}*/
 
-	cout << endl << "Printing rules" << endl;
-
+	cout << ">>> Printing rules" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 	list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		if((*it))
 			cout << (*it)->printRule() << endl;
 	}
 
-	// Create PST
 	parser.makePST();
-	cout << "Created PST" << endl;
+	cout << ">>> Created PST" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 
 	parser.print_table();
 
 	cout << ">>> Parser Done" << endl;
+	sleep_until(system_clock::now() + seconds(3));
 }
