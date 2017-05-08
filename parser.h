@@ -109,14 +109,14 @@ public:
 				// }
 			}
 		}
-
-		void makeAST() {
-		}
-		Take the tree and create a printable represenation of it
-		@param tree a node pointer to the tree to serialize
 		*/
 	}
 
+	//Take the tree and create a printable represenation of it
+	//@param tree a node pointer to the tree to serialize
+	void makeAST() {
+	}
+	
 	Grammar getGmr() {
 		return *gmr;
 	}
