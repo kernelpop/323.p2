@@ -156,13 +156,13 @@ void runParser(vector<token> tokenList) {
 		cout << t.getName() << endl;
 	}*/
 
-	cout << ">>> Printing rules" << endl;
+	/*cout << ">>> Printing rules" << endl;
 	sleep_until(system_clock::now() + seconds(1));
 	list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		if((*it))
 			cout << (*it)->printRule() << endl;
-	}
+	}*/
 
 	parser.makePST();
 	cout << ">>> Created PST" << endl;
@@ -171,5 +171,4 @@ void runParser(vector<token> tokenList) {
 	parser.print_table();
 
 	cout << ">>> Parser Done" << endl;
-	sleep_until(system_clock::now() + seconds(3));
 }

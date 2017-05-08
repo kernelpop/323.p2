@@ -45,16 +45,19 @@ public:
 		// Add the eof symbol
 		workingStack.push(symbol("$",0));		
 
+		// Add the eof token
+		token eof;
+		eof.id = "$";
+		tokenList.push_back(eof);
+		
 		/*
-		inputStream.push_back(Token("$"));	// Add the eof token		------ERROR
-
 		workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
 		pst = new Node(workingStack.top());
 
 			while(!workingStack.empty()) {
 				// int i = 0;
 				//Symbol top = workingStack.top();								------ERROR
-				//Token front = inputStream.front();							------ERROR
+				//Token front = tokenList.front();							------ERROR
 
 				//if(top.isTerminal()) {										------ERROR
 				//	if(top.name != front.id) {
