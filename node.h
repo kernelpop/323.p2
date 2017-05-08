@@ -15,7 +15,7 @@ public:
 	Node(symbol * rContent) {
 	content = rContent;
 	}
-	~Node();
+	~Node() {}
 
 	void insert(Node* newChild) {}
 

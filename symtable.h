@@ -21,15 +21,15 @@ class Sym {
 	string valueString;
 	list<occurence> occurences;
 public:
-	Sym();
-	~Sym();
+	Sym() {}
+	~Sym() {}
 
 };
 
 class SymTable {
 	list<Sym> table;
 public:
-	SymTable();
-	~SymTable();
+	SymTable() {}
+	~SymTable() {}
 
 };
