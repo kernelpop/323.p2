@@ -50,8 +50,10 @@ public:
 		eof.id = "$";
 		tokenList.push_back(eof);
 		
+		// Add the start symbol
+		workingStack.push(symbol("Pgm",0));	
+				
 		/*
-		workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
 		pst = new Node(workingStack.top());
 
 			while(!workingStack.empty()) {
