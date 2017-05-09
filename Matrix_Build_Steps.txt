@@ -31,6 +31,7 @@ A3 Grammar
 18  Elist = E Elist2
 19  Elist = eps
 20  Elist2 = comma Elist
+39  Elist2 = eps
     
 21  R = Opadd T R
 22  E = T R
