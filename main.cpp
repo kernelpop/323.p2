@@ -77,7 +77,7 @@ int main() {
 
 void runParser(vector<token> tokenList) {
 
-	cout << endl << ">>> Parser Running" << endl;
+	cout << ">>> Parser Running" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	Parser parser;
@@ -169,7 +169,17 @@ void runParser(vector<token> tokenList) {
 	cout << ">>> Created PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
+	cout << ">>> Printing PST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	//parser.printPST(NEEDS A NODE);
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+
 	parser.print_table();
+
+	cout << ">>> Printing AST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	//parser.printAST(NEEDS A NODE);
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	cout << ">>> Parser Done" << endl;
 }

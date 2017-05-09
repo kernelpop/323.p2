@@ -145,6 +145,10 @@ public:
 		cout << endl;
 
 	}
+
+	void printAST(Node * current) {
+
+	}
 	
 	Grammar getGmr() {
 		return *gmr;
