@@ -22,6 +22,11 @@ struct token {
 	int ix;			// optional; index number
 	string str;		// optional; actual string
 
+	token() {}
+
+	token(string rId) {
+		id = rId;
+	}
 	
 	
 };

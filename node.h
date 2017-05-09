@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <list>
+#include <vector>
 #include "symbol.h"
 
 using namespace std;
@@ -9,17 +9,22 @@ using namespace std;
 class Node {
 	symbol* content;
 	Node* parent;
-	list<Node*> children;
+	vector<Node*> children;
+
 public:
 	Node() {}
-	Node(symbol * rContent) {
-	content = rContent;
+
+	Node(symbol* rContent) {
+		content = rContent;
 	}
+
 	~Node() {}
 
-	void insert(Node* newChild) {}
+	void insert(Node* newChild) {
+		children.push_back(newChild);
+	}
 
-	list<Node*> getChildren() {
+	vector<Node*> getChildren() {
 		return children;
 	}
 
@@ -33,11 +38,26 @@ public:
 	}
 
 	void remove(Node* child) {
-		children.remove(child);
+		// children.erase(/*child position*/);
 	}
 
-	string toString() {
-		return "hello world";
+	string toString(Node* ptr) {
+		// Base step
+		if(!ptr) {
+			return "";
+		}
+
+		string s;
+
+		s += ptr->content->toString();
+		s += "\n";
+
+		for(size_t i = 0; i < children.size(); ++ i) {
+			s += toString(children[i]);
+			s += "\n";
+		}
+
+		return s;
 	}
 
 };

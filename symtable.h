@@ -23,10 +23,6 @@ class Sym {
 public:
 	Sym() {}
 	~Sym() {}
-
-	~Sym() {
-
-	};
 };
 
 class SymTable {

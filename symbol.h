@@ -27,6 +27,18 @@ public:
     string getName() {
         return name;
     }
+
+    string toString() {
+      string s;
+      s += name;
+      s += " - ";
+      if(isTerminal)
+        s += "Terminal symbol";
+      else
+        s += "NonTerminal symbol";
+
+      return s;
+    }
     
     /*bool Symbol::operator==(Symbol &rhs) const{
         return this->name == rhs.name;
@@ -66,6 +78,10 @@ public:
 
    NonTerminal(string rName, int rRule) : symbol(rName, false) {
         rule = rRule;
+   }
+
+   NonTerminal(string rName) : symbol(rName, false) {
+
    }
 
    ~NonTerminal() {}

@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const string FILE_PARSER = " - parser.h";
+
 class Parser {
 	Grammar* gmr;
 	Node* pst;
@@ -39,17 +41,27 @@ public:
 
 	void makePST() {
 		//	Setup
-		stack<symbol> workingStack;
-		
-		// Add the eof symbol
-		workingStack.push(symbol("$",0));		
-		
-		/*
-		inputStream.push_back(Token("$"));	// Add the eof token		------ERROR
+		stack<symbol*> workingStack;
 
-		workingStack.push(Symbol("Pgm"));	// Add the start symbol			------ERROR
+		
+		// Add the eof symbol to stack
+		workingStack.push(gmr->terminals["$"]);
+
+		// Add the start symbol to stack
+		workingStack.push(gmr->nonTerminals["Pgm"]);		
+		
+		// Add the eof token to imp
+		tokenList.push_back(token("$"));
+
+		// cout << tokenList.back().id << FILE_PARSER << endl;		// Test if token created succesfully
+		
+
 		pst = new Node(workingStack.top());
+		// pst->insert(new Node(gmr->terminals["$"]));
+		cout << pst->toString(pst) << FILE_PARSER << endl;
 
+		// cout << pst->toString() << FILE_PARSER << endl;
+/*
 			while(!workingStack.empty()) {
 				// int i = 0;
 				//Symbol top = workingStack.top();								------ERROR

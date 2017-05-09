@@ -7,6 +7,8 @@
 #include "parser.h"
 #include "symbol.h"
 
+const string FILE_MAIN = " - main.cpp";
+
 using namespace std;
 
 string Test_File = "test_X.txt";
@@ -37,7 +39,7 @@ int main() {
 
 				_Tokens = tokenize(_Strings);
 
-				token_printer(_Language, _Tokens);
+				// token_printer(_Language, _Tokens);
 
 				runParser(_Tokens);
 
@@ -71,24 +73,24 @@ int main() {
 
 void runParser(vector<token> tokenList) {
 	
-	cout << endl << ">>> Parser Running" << endl;
+	cout << endl << ">>> Parser Running" << FILE_MAIN << endl;
 
-	for (size_t i = 0; i < tokenList.size(); ++i) {
-		cout << tokenList[i].id << endl;
-	}
+	// for (size_t i = 0; i < tokenList.size(); ++i) {
+	// 	cout << tokenList[i].id << endl;
+	// }
 
 	Parser parser;
 
-	cout << "Parser created" << endl;
+	cout << "Parser created" << FILE_MAIN << endl;
 
 	//	Send the generated tokens to the parse machine
 	parser.addTokensToParse(tokenList);
 
-	cout << "Tokens sent to parser" << endl;
+	cout << "Tokens sent to parser" << FILE_MAIN << endl;
 
 	Grammar g = parser.getGmr();
 
-	cout << "Created grammar" << endl;
+	cout << "Created grammar" << FILE_MAIN << endl;
 
 	vector<string> temp;
 
@@ -141,7 +143,7 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-	cout << "Created temp list" << endl;
+	cout << "Created temp list" << FILE_MAIN << endl;
 
 	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -153,19 +155,19 @@ void runParser(vector<token> tokenList) {
 		cout << t.getName() << endl;
 	}*/
 
-	cout << endl << "Printing rules" << endl;
+	/*cout << endl << "Printing rules" << endl;
 
 	list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		if((*it))
 			cout << (*it)->printRule() << endl;
-	}
+	}*/
 
 	// Create PST
 	parser.makePST();
-	cout << "Created PST" << endl;
+	cout << "Created PST" << FILE_MAIN << endl;
 
 	parser.print_table();
 
-	cout << ">>> Parser Done" << endl;
+	cout << ">>> Parser Done" << FILE_MAIN << endl;
 }
