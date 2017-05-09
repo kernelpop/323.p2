@@ -34,7 +34,7 @@ public:
     	string s;
     	s += lhs->getName();
     	s += " = ";
-    	for (int i = 0; i < rhs.size(); i++) {
+    	for (size_t i = 0; i < rhs.size(); i++) {
     		s += rhs[i]->getName();
     		s += " ";
     	}
@@ -48,6 +48,10 @@ public:
             reversed.push_back(rhs[i]);
         }
         return reversed;
+    }
+
+    vector<symbol*> getRhs() {
+        return rhs;
     }
 
     bool isEmpty() {
@@ -336,6 +340,11 @@ class Grammar {
     	temp.push_back(terminals["caret"]);
     	rules.push_back(new Rule(nonTerminals["Opmul"], temp));
     	temp.clear();
+
+        // Rule 39
+        temp.push_back(terminals["eps"]);
+        rules.push_back(new Rule(nonTerminals["Elist2"], temp));
+        temp.clear();
     }
 
     void createParseMatrix() {
@@ -346,6 +355,67 @@ class Grammar {
         parseMatrix["Stmts_kwdif"] = 3;
         parseMatrix["Stmts_id"] = 3;
         parseMatrix["Stmts_brace2"] = 4;
+        parseMatrix["Stmt_kwdprint"] = 6;
+        parseMatrix["Stmt_kwdwhile"] = 7;
+        parseMatrix["Stmt_id"] = 5;
+        parseMatrix["Astmt_id"] = 9;
+        parseMatrix["Y_kwdinput"] = 10;
+        parseMatrix["Y_id"] = 11;
+        parseMatrix["Y_int"] = 11;
+        parseMatrix["Y_float"] = 11;
+        parseMatrix["Y_string"] = 11;
+        parseMatrix["Y_kwdinput"] = 11;
+        parseMatrix["Y_paren1"] = 11;
+        parseMatrix["Ostmt_kwdprint"] = 12;
+        parseMatrix["Wstmt_kwdwhile"] = 13;
+        parseMatrix["Fstmt_kwdif"] = 14;
+        parseMatrix["Else2_kwdelseif"] = 15;
+        parseMatrix["Else2_kwdelse"] = 16;
+        parseMatrix["Else2_semi"] = 17;
+        parseMatrix["Elist_id"] = 18;
+        parseMatrix["Elist_int"] = 18;
+        parseMatrix["Elist_float"] = 18;
+        parseMatrix["Elist_string"] = 18;
+        parseMatrix["Elist_paren1"] = 18;
+        parseMatrix["Elist_paren2"] = 19;
+        parseMatrix["Elist2_comma"] = 20;
+        parseMatrix["R_plus"] = 21;
+        parseMatrix["R_minus"] = 21;
+        parseMatrix["R_comma"] = 23;
+        parseMatrix["R_semi"] = 23;
+        parseMatrix["R_paren2"] = 23;
+        parseMatrix["E_id"] = 22;
+        parseMatrix["E_int"] = 22;
+        parseMatrix["E_float"] = 22;
+        parseMatrix["E_string"] = 22;
+        parseMatrix["E_paren1"] = 22;
+        parseMatrix["S_aster"] = 24;
+        parseMatrix["S_slash"] = 24;
+        parseMatrix["S_caret"] = 24;
+        parseMatrix["S_comma"] = 26;
+        parseMatrix["S_semi"] = 26;
+        parseMatrix["S_paren2"] = 26;
+        parseMatrix["T_id"] = 25;
+        parseMatrix["T_int"] = 25;
+        parseMatrix["T_float"] = 25;
+        parseMatrix["T_string"] = 25;
+        parseMatrix["T_paren1"] = 25;
+        parseMatrix["F_id"] = 27;
+        parseMatrix["F_int"] = 27;
+        parseMatrix["F_float"] = 27;
+        parseMatrix["F_string"] = 27;
+        parseMatrix["F_paren1"] = 28;
+        parseMatrix["Pexpr_paren1"] = 29;
+        parseMatrix["Fatom_id"] = 30;
+        parseMatrix["Fatom_int"] = 31;
+        parseMatrix["Fatom_float"] = 32;
+        parseMatrix["Fatom_string"] = 33;
+        parseMatrix["Opadd_plus"] = 34;
+        parseMatrix["Opadd_minus"] = 35;
+        parseMatrix["Opmul_aster"] = 36;
+        parseMatrix["Opmul_slash"] = 37;
+        parseMatrix["Opmul_caret"] = 38;
+        parseMatrix["Elist2_paren2"] = 39;
     }
 
 public:
@@ -382,8 +452,14 @@ public:
 
     Rule getRuleAt(string row, string col) {
         string row_col = row + "_" + col;
-        int ruleNum = parseMatrix[row_col];
-        return *rules[ruleNum];
+        if(parseMatrix.count(row_col) > 0) {    // Check if key exists
+            int ruleNum = parseMatrix[row_col];
+            return *rules[ruleNum];
+        } else {
+            return *(new Rule());
+        }
+        
+        
     }
 
     symbol getRule(string rule) {

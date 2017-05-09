@@ -45,7 +45,7 @@ int main() {
 
 				_Tokens = tokenize(_Strings);
 
-				// token_printer(_Language, _Tokens);
+				token_printer(_Language, _Tokens);
 
 				runParser(_Tokens);
 
@@ -174,7 +174,7 @@ void runParser(vector<token> tokenList) {
 			cout << (*it)->printRule() << endl;
 	}*/
 	
-	//Node * pst = parser.makePST();
+	Node * pst = parser.makePST();
 	cout << ">>> Created PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
@@ -185,7 +185,7 @@ void runParser(vector<token> tokenList) {
 
 	parser.print_table();
 
-	//Node * ast = parser.makeAST(pst);
+	// Node * ast = parser.makeAST(pst);
 	cout << ">>> Created AST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 

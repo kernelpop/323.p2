@@ -42,6 +42,8 @@ public:
 
 	Node * makePST() {
 		
+		cout << "Starting to parse token list" << endl;
+
 		//	Setup
 		stack<symbol*> workingStack;
 
@@ -54,58 +56,52 @@ public:
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
+		cout << "finished setup" << endl;
+
 		while(!workingStack.empty()) {
-			int i = 0;
 			symbol* top = workingStack.top();
 			token front = tokenList.front();
 
-			// M1:
-			Rule rule = gmr->getRuleAt(top->getName(), front.id);
-			if(!rule.isEmpty()) {
-
-				cout << rule.printRule() << endl;
-
-				// Remove the top symbol from stack
-				// workingStack.pop();
-					
-				// Add the rule backwards
-				// vector<symbol*> rhsRev = rule.rhsReversed();
-				// for (int i = 0; i < rhsRev.size(); ++i) {
-				// 	workingStack.push(rhsRev[i]);
-				// }
-
-				// Reassign the top variable
-					
-				//top = workingStack.top();									------ERROR
-			} 
-			/*else {
-				 The rule is empty => there is no prediction for this
-
-				 TODO: throw an error
-				 Error: unexpected token found, line front.line
-			}*/
-
-			// M2
-			else {
-				if (top->isTerm()) {
-					// 	Error();
-					// }
-
-					// // M3
-					// else if(gmr.getRule(top, front).isEmpty()){
-					// 	Error();
-					// }
-
-					// // M4
-					// else if(!gmr.getRule(top, front).isEmpty()) {
-					// 	workingStack.pop();
-					// 	workingStack.push(gmr.getRule(top, front).reverse());
-
-					// }
-					// else {
-					// 	printStatus();
-					// }
+			if(top->isTerm()) {
+				// if it's an epsilon rule pop it off
+				if(top->getName() == "eps") {
+					cout << "Popping of eps rule." << endl;
+					workingStack.pop();
 				}
+
+				// if top it terminal check if it matches front
+				if(top->getName() == front.id) {	// ****may have to change this
+					cout << "Matched: " << front.id;
+					cout << ". Popping off the top and the front." << endl;
+
+					// Pop the top
+					workingStack.pop();
+
+					// Pop the front
+					tokenList.erase(tokenList.begin());
+				}
+			} else {
+				// M1:
+				Rule rule = gmr->getRuleAt(top->getName(), front.id);
+
+				cout << "Checking for rule: ";
+				cout << "(" << top->getName() << ", " << front.id << ")";
+				cout << endl;
+
+				if(!rule.isEmpty()) {
+
+					cout << "This rule was found: ";
+					cout << rule.printRule() << endl;
+
+					// Remove the top symbol from stack
+					workingStack.pop();
+						
+					// Add the rule in reverse
+					vector<symbol*> rhsRev = rule.rhsReversed();
+					for (int i = 0; i < rhsRev.size(); ++i) {
+						workingStack.push(rhsRev[i]);
+					}
+				} 
 			}
 		}
 		
@@ -157,6 +153,41 @@ public:
 	}
 
 };
+
+
+// Stuff for parser
+
+			/*else {
+				 The rule is empty => there is no prediction for this
+
+				 TODO: throw an error
+				 Error: unexpected token found, line front.line
+			}*/
+
+			// M2
+			// else {
+			// 	if (top->isTerm()) {
+					// 	Error();
+					// }
+
+					// // M3
+					// else if(gmr.getRule(top, front).isEmpty()){
+					// 	Error();
+					// }
+
+					// // M4
+					// else if(!gmr.getRule(top, front).isEmpty()) {
+					// 	workingStack.pop();
+					// 	workingStack.push(gmr.getRule(top, front).reverse());
+
+					// }
+					// else {
+					// 	printStatus();
+					// }
+				// }
+			// }
+
+
 
 // Stuff for making a tree
 // cout << tokenList.back().id << FILE_PARSER << endl;		// Test if token created succesfully
