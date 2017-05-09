@@ -110,7 +110,7 @@ class Grammar {
     void createRules() {
     	list<symbol*> temp;
 
-    	rules.push_back(NULL); // no rule at index 0
+		rules.push_back(NULL); // no rule at index 0
 
     	// Rule 1
     	temp.push_back(terminals["kwdprog"]);
@@ -344,7 +344,7 @@ public:
         createRules();
     }
 
-    ~Grammar() {
+    /*~Grammar() {					---------ERROR CAUSES EXECUTION FAIL------------   Error related to iterator
     	for(auto it = terminals.begin(); it != terminals.end(); ++it) {
     		delete it->second;
     		terminals.erase(it);
@@ -360,7 +360,7 @@ public:
     		rules.pop_front();
     	}
 
-    }
+    }*/
 
     Rule getRuleAt(string top, string next) {
         return Rule();

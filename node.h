@@ -7,15 +7,22 @@
 using namespace std;
 
 class Node {
+	
 	symbol* content;
+	
 	Node* parent;
 	vector<Node*> children;
 
 public:
+	
 	Node() {}
 
 	Node(symbol* rContent) {
 		content = rContent;
+	}
+	
+	void setSymbol(symbol * r_sym) {
+		content = r_sym;
 	}
 
 	~Node() {}
@@ -41,6 +48,13 @@ public:
 		// children.erase(/*child position*/);
 	}
 
+	symbol * getSymbol()
+	{
+		return content;
+	}
+
+	string toString() {
+		return "hello world";
 	string toString(Node* ptr) {
 		// Base step
 		if(!ptr) {

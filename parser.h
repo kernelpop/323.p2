@@ -35,11 +35,13 @@ public:
 		symTable.print_table();
 	}
 	
-	void addTokensToParse(vector<token> rTokenList) {
-		tokenList = rTokenList;
+	void addTokensToParser(vector<token> _TokenList) {
+		tokenList = _TokenList;
+		cout << ">>>>>> Parser received " << tokenList.size() << " token(s)" << endl;
 	}
 
-	void makePST() {
+	Node * makePST() {
+		
 		//	Setup
 		stack<symbol*> workingStack;
 
@@ -67,62 +69,95 @@ public:
 				//Symbol top = workingStack.top();								------ERROR
 				//Token front = inputStream.front();							------ERROR
 
-				//if(top.isTerminal()) {										------ERROR
-				//	if(top.name != front.id) {
-				//		// TODO: throw an error
-				//		// Error: epected x, found y, line front.line
-				//	}
-				//}
+		//	// M1:
+		//	list<symbol> rule;		// = gmr.getRule(top.name, front.id);
+		//	if(!rule.empty()) {
+		//		// Remove the top symbol from stack
+		//		workingStack.pop();
+		//			
+		//		// Add the rule backwards
+		//		for (int i = rule.size() - 1; i >= 0; --i) {
+		//			//workingStack.push(rule[i]);							------ERROR
+		//		}
 
-				// M1:
-				list<Symbol> rule;// = gmr.getRule(top.name, front.id);			------ERROR
-				if(!rule.empty()) {
-					// Remove the top symbol from stack
-					workingStack.pop();
-					
-					// Add the rule backwards
-					for (int i = rule.size() - 1; i >= 0; --i) {
-						//workingStack.push(rule[i]);							------ERROR
-					}
+		//		// Reassign the top variable
+		//			
+		//		//top = workingStack.top();									------ERROR
+		//	} 
+		//	/*else {
+		//		 The rule is empty => there is no prediction for this
 
-					// Reassign the top variable
-					//top = workingStack.top();									------ERROR
-				} else {
-					// The rule is empty => there is no prediction for this
+		//		 TODO: throw an error
+		//		 Error: unexpected token found, line front.line
+		//	}*/
 
-					// TODO: throw an error
-					// Error: unexpected token found, line front.line
-				}
+		//	// M2
+		//	else {
+		//		if (top.isTerm()) {
+		//			// 	Error();
+		//			// }
 
-				// M2
-				// else if(top.isTerminal {
-				// 	Error();
-				// }
+		//			// // M3
+		//			// else if(gmr.getRule(top, front).isEmpty()){
+		//			// 	Error();
+		//			// }
 
-				// // M3
-				// else if(gmr.getRule(top, front).isEmpty()){
-				// 	Error();
-				// }
+		//			// // M4
+		//			// else if(!gmr.getRule(top, front).isEmpty()) {
+		//			// 	workingStack.pop();
+		//			// 	workingStack.push(gmr.getRule(top, front).reverse());
 
-				// // M4
-				// else if(!gmr.getRule(top, front).isEmpty()) {
-				// 	workingStack.pop();
-				// 	workingStack.push(gmr.getRule(top, front).reverse());
+		//			// }
+		//			// else {
+		//			// 	printStatus();
+		//			// }
+		//		}
+		//	}
+		//}
+		
+		return pst;
 
-				// }
-				// else {
-				// 	printStatus();
-				// }
-			}
-		}
-
-		void makeAST() {
-		}
-		Take the tree and create a printable represenation of it
-		@param tree a node pointer to the tree to serialize
-		*/
 	}
 
+
+
+	//Take the tree and create a printable represenation of it
+	//@param tree a node pointer to the tree to serialize
+	Node * makeAST(Node * pst) {
+		Node * AST;
+		//	NEEDS IMPLEMENTATION
+		return AST;
+	}
+
+	//This is the print function of a PST tree.
+	//Implemented as a recursive pre-order function. 
+	//NOTE: this is unfinished
+	void printPST(Node * current)
+	{
+		if (current == nullptr)
+		{
+			cout << "null" << endl;
+			return;
+		}
+		/*else //may not be used
+		{
+			cout << current->getName() + " >>> ";
+
+		}*/
+		//for (int i = 0; i < current->getChildren().size(); ++i)
+		for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		{
+			cout << current->getSymbol()->getName() << " >>> ";
+			//printPST(current->it);
+		}
+		cout << endl;
+
+	}
+
+	void printAST(Node * current) {
+
+	}
+	
 	Grammar getGmr() {
 		return *gmr;
 	}

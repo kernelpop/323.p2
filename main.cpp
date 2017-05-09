@@ -6,15 +6,21 @@
 #include "token.h"
 #include "parser.h"
 #include "symbol.h"
+#include <ctime>
+#include <chrono>
+#include <thread>
 
 const string FILE_MAIN = " - main.cpp";
 
 using namespace std;
+using namespace this_thread;
+using namespace chrono;
 
 string Test_File = "test_X.txt";
 vector<string> _Strings;
 vector<token> _Tokens;
 string _Language = "A3";
+int pause_time = 500;	//Milliseconds
 
 void runParser(vector<token> tokenList);
 
@@ -72,14 +78,13 @@ int main() {
 }
 
 void runParser(vector<token> tokenList) {
-	
-	cout << endl << ">>> Parser Running" << FILE_MAIN << endl;
 
-	// for (size_t i = 0; i < tokenList.size(); ++i) {
-	// 	cout << tokenList[i].id << endl;
-	// }
+	cout << ">>> Parser Running" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	Parser parser;
+	cout << ">>> Created Parser object 'parser'" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	cout << "Parser created" << FILE_MAIN << endl;
 
@@ -89,9 +94,14 @@ void runParser(vector<token> tokenList) {
 	cout << "Tokens sent to parser" << FILE_MAIN << endl;
 
 	Grammar g = parser.getGmr();
+	cout << ">>> Created grammar object 'g'" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	cout << "Created grammar" << FILE_MAIN << endl;
-
+	cout << ">>> Sending tokens to 'parser'" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	parser.addTokensToParser(tokenList);
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	
 	vector<string> temp;
 
 	temp.push_back("kwdprog");
@@ -143,7 +153,8 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Block");
 	temp2.push_back("Pgm");
 
-	cout << "Created temp list" << FILE_MAIN << endl;
+	cout << ">>> Created list 'temp'" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -155,19 +166,33 @@ void runParser(vector<token> tokenList) {
 		cout << t.getName() << endl;
 	}*/
 
-	/*cout << endl << "Printing rules" << endl;
-
+	/*cout << ">>> Printing rules" << endl;
+	sleep_until(system_clock::now() + seconds(1));
 	list<Rule*> rules = g.rules;
 	for (auto it = rules.begin(); it != rules.end(); ++it) {
 		if((*it))
 			cout << (*it)->printRule() << endl;
 	}*/
 
-	// Create PST
-	parser.makePST();
-	cout << "Created PST" << FILE_MAIN << endl;
+	Node * pst = parser.makePST();
+	cout << ">>> Created PST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+
+	cout << ">>> Printing PST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	//parser.printPST(pst);
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	parser.print_table();
 
-	cout << ">>> Parser Done" << FILE_MAIN << endl;
+	//Node * ast = parser.makeAST(pst);
+	cout << ">>> Created AST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+
+	cout << ">>> Printing AST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+	//parser.printAST(NEEDS A NODE);
+	sleep_until(system_clock::now() + milliseconds(pause_time));
+
+	cout << ">>> Parser Done" << endl;
 }
