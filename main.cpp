@@ -173,8 +173,8 @@ void runParser(vector<token> tokenList) {
 		if((*it))
 			cout << (*it)->printRule() << endl;
 	}*/
-
-	Node * pst = parser.makePST();
+	
+	//Node * pst = parser.makePST();
 	cout << ">>> Created PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
