@@ -165,16 +165,20 @@ void runParser(vector<token> tokenList) {
 			cout << (*it)->printRule() << endl;
 	}*/
 
-	parser.makePST();
+	Node * pst = parser.makePST();
 	cout << ">>> Created PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	cout << ">>> Printing PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
-	//parser.printPST(NEEDS A NODE);
+	//parser.printPST(pst);
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	parser.print_table();
+
+	//Node * ast = parser.makeAST(pst);
+	cout << ">>> Created AST" << endl;
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	cout << ">>> Printing AST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));

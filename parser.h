@@ -38,7 +38,7 @@ public:
 		cout << ">>>>>> Parser received " << tokenList.size() << " token(s)" << endl;
 	}
 
-	void makePST() {
+	Node * makePST() {
 		
 		//	Setup
 		stack<symbol> workingStack;
@@ -53,8 +53,14 @@ public:
 		
 		// Add the start symbol
 		workingStack.push(symbol("Pgm",0));	
-				
+		
+		// Start the tree
 		Node * pst = new Node(&workingStack.top());
+		
+		// Add kwdprog
+		symbol * t = new symbol("kwdprog",1);
+		Node * temp = new Node(t);
+		pst->insert(temp);
 		
 		//while(!workingStack.empty()) {
 		//	
@@ -120,13 +126,18 @@ public:
 		//	}
 		//}
 		
+		return pst;
+
 	}
 
 
 
 	//Take the tree and create a printable represenation of it
 	//@param tree a node pointer to the tree to serialize
-	void makeAST() {
+	Node * makeAST(Node * pst) {
+		Node * AST;
+		//	NEEDS IMPLEMENTATION
+		return AST;
 	}
 
 	//This is the print function of a PST tree.
