@@ -1,0 +1,7 @@
+#! bash
+
+clear
+if [ -f a.out ]; then
+	rm a.out
+fi
+g++ -std=c++11 main.cpp && ./a.out
