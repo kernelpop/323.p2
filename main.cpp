@@ -10,6 +10,8 @@
 #include <chrono>
 #include <thread>
 
+const string FILE_MAIN = " - main.cpp";
+
 using namespace std;
 using namespace this_thread;
 using namespace chrono;
@@ -43,7 +45,7 @@ int main() {
 
 				_Tokens = tokenize(_Strings);
 
-				token_printer(_Language, _Tokens);
+				// token_printer(_Language, _Tokens);
 
 				runParser(_Tokens);
 
@@ -83,6 +85,13 @@ void runParser(vector<token> tokenList) {
 	Parser parser;
 	cout << ">>> Created Parser object 'parser'" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
+
+	cout << "Parser created" << FILE_MAIN << endl;
+
+	//	Send the generated tokens to the parse machine
+	parser.addTokensToParse(tokenList);
+
+	cout << "Tokens sent to parser" << FILE_MAIN << endl;
 
 	Grammar g = parser.getGmr();
 	cout << ">>> Created grammar object 'g'" << endl;

@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const string FILE_PARSER = " - parser.h";
+
 class Parser {
 	Grammar* gmr;
 	Node* pst;
@@ -41,96 +43,77 @@ public:
 	Node * makePST() {
 		
 		//	Setup
-		stack<symbol> workingStack;
+		stack<symbol*> workingStack;
+
 		
-		// Add the eof symbol
-		workingStack.push(symbol("$",0));		
+		// Add the eof symbol to stack
+		workingStack.push(gmr->terminals["$"]);
 
-		// Add the eof token
-		token eof;
-		eof.id = "$";
-		tokenList.push_back(eof);
+		// Add the start symbol to stack
+		workingStack.push(gmr->nonTerminals["Pgm"]);		
 		
-		// Add the start symbol
-		workingStack.push(symbol("Pgm",0));	
+		// Add the eof token to imp
+		tokenList.push_back(token("$"));
+
+		// cout << tokenList.back().id << FILE_PARSER << endl;		// Test if token created succesfully
 		
-		// Start the tree
-		Node * pst = new Node(&workingStack.top());
-		
-		// Add kwdprog
-		symbol * t = new symbol("kwdprog",1);
-		Node * temp = new Node(t);
-		pst->insert(temp);
-		
-		while(!workingStack.empty()) {
-			
-			int i = 0;
-			
-			symbol top = workingStack.top();
-			
-			token front = tokenList.front();
 
-			if(top.isTerm()) {
-				if(top.getName() != front.id) {
-					
-					// Throw and error: epected x, found y, line front.line
-					cout << ">>>>>> Error: stack top is terminal" << endl;
-					exit(1);
+		pst = new Node(workingStack.top());
+		// pst->insert(new Node(gmr->terminals["$"]));
+		cout << pst->toString(pst) << FILE_PARSER << endl;
 
-				}
-				else
-				{
-					//pop
-					workingStack.pop();
-					tokenList.erase(tokenList.begin());
-				}
-			}
+		// cout << pst->toString() << FILE_PARSER << endl;
+/*
+			while(!workingStack.empty()) {
+				// int i = 0;
+				//Symbol top = workingStack.top();								------ERROR
+				//Token front = inputStream.front();							------ERROR
 
-			// M1:
-			list<symbol> rule;		// = gmr.getRule(top.name, front.id);
-			if(!rule.empty()) {
-				// Remove the top symbol from stack
-				workingStack.pop();
-					
-				// Add the rule backwards
-				for (int i = rule.size() - 1; i >= 0; --i) {
-					//workingStack.push(rule[i]);							------ERROR
-				}
+		//	// M1:
+		//	list<symbol> rule;		// = gmr.getRule(top.name, front.id);
+		//	if(!rule.empty()) {
+		//		// Remove the top symbol from stack
+		//		workingStack.pop();
+		//			
+		//		// Add the rule backwards
+		//		for (int i = rule.size() - 1; i >= 0; --i) {
+		//			//workingStack.push(rule[i]);							------ERROR
+		//		}
 
-				// Reassign the top variable
-					
-				//top = workingStack.top();									------ERROR
-			} 
-			/*else {
-				 The rule is empty => there is no prediction for this
+		//		// Reassign the top variable
+		//			
+		//		//top = workingStack.top();									------ERROR
+		//	} 
+		//	/*else {
+		//		 The rule is empty => there is no prediction for this
 
-				 TODO: throw an error
-				 Error: unexpected token found, line front.line
-			}*/
+		//		 TODO: throw an error
+		//		 Error: unexpected token found, line front.line
+		//	}*/
 
-			// M2
-			else {
-				if (top.isTerm()) {
-					// 	Error();
-					// }
+		//	// M2
+		//	else {
+		//		if (top.isTerm()) {
+		//			// 	Error();
+		//			// }
 
-					// // M3
-					// else if(gmr.getRule(top, front).isEmpty()){
-					// 	Error();
-					// }
+		//			// // M3
+		//			// else if(gmr.getRule(top, front).isEmpty()){
+		//			// 	Error();
+		//			// }
 
-					// // M4
-					// else if(!gmr.getRule(top, front).isEmpty()) {
-					// 	workingStack.pop();
-					// 	workingStack.push(gmr.getRule(top, front).reverse());
+		//			// // M4
+		//			// else if(!gmr.getRule(top, front).isEmpty()) {
+		//			// 	workingStack.pop();
+		//			// 	workingStack.push(gmr.getRule(top, front).reverse());
 
-					// }
-					// else {
-					// 	printStatus();
-					// }
-				}
-			}
-		}
+		//			// }
+		//			// else {
+		//			// 	printStatus();
+		//			// }
+		//		}
+		//	}
+		//}
 		
 		return pst;
 
