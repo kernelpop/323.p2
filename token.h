@@ -21,9 +21,6 @@ struct token {
 	string id;		// id based on grammar
 	int ix;			// optional; index number
 	string str;		// optional; actual string
-
-	
-	
 };
 
 bool isLetter(char, bool);

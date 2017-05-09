@@ -62,69 +62,75 @@ public:
 		Node * temp = new Node(t);
 		pst->insert(temp);
 		
-		//while(!workingStack.empty()) {
-		//	
-		//	int i = 0;
-		//	
-		//	symbol top = workingStack.top();
-		//	
-		//	token front = tokenList.front();
+		while(!workingStack.empty()) {
+			
+			int i = 0;
+			
+			symbol top = workingStack.top();
+			
+			token front = tokenList.front();
 
-		//	if(top.isTerm()) {
-		//		if(top.getName() != front.id) {
-		//			
-		//			// Throw and error: epected x, found y, line front.line
-		//			cout << ">>>>>> Error: stack top is terminal" << endl;
-		//			exit(1);
+			if(top.isTerm()) {
+				if(top.getName() != front.id) {
+					
+					// Throw and error: epected x, found y, line front.line
+					cout << ">>>>>> Error: stack top is terminal" << endl;
+					exit(1);
 
-		//		}
-		//	}
+				}
+				else
+				{
+					//pop
+					workingStack.pop();
+					tokenList.erase(tokenList.begin());
+				}
+			}
 
-		//	// M1:
-		//	list<symbol> rule;		// = gmr.getRule(top.name, front.id);
-		//	if(!rule.empty()) {
-		//		// Remove the top symbol from stack
-		//		workingStack.pop();
-		//			
-		//		// Add the rule backwards
-		//		for (int i = rule.size() - 1; i >= 0; --i) {
-		//			//workingStack.push(rule[i]);							------ERROR
-		//		}
+			// M1:
+			list<symbol> rule;		// = gmr.getRule(top.name, front.id);
+			if(!rule.empty()) {
+				// Remove the top symbol from stack
+				workingStack.pop();
+					
+				// Add the rule backwards
+				for (int i = rule.size() - 1; i >= 0; --i) {
+					//workingStack.push(rule[i]);							------ERROR
+				}
 
-		//		// Reassign the top variable
-		//			
-		//		//top = workingStack.top();									------ERROR
-		//	} 
-		//	/*else {
-		//		 The rule is empty => there is no prediction for this
+				// Reassign the top variable
+					
+				//top = workingStack.top();									------ERROR
+			} 
+			/*else {
+				 The rule is empty => there is no prediction for this
 
-		//		 TODO: throw an error
-		//		 Error: unexpected token found, line front.line
-		//	}*/
+				 TODO: throw an error
+				 Error: unexpected token found, line front.line
+			}*/
 
-		//	// M2
-		//	else {
-		//		if (top.isTerm()) {
-		//			// 	Error();
-		//			// }
+			// M2
+			else {
+				if (top.isTerm()) {
+					// 	Error();
+					// }
 
-		//			// // M3
-		//			// else if(gmr.getRule(top, front).isEmpty()){
-		//			// 	Error();
-		//			// }
+					// // M3
+					// else if(gmr.getRule(top, front).isEmpty()){
+					// 	Error();
+					// }
 
-		//			// // M4
-		//			// else if(!gmr.getRule(top, front).isEmpty()) {
-		//			// 	workingStack.pop();
-		//			// 	workingStack.push(gmr.getRule(top, front).reverse());
+					// // M4
+					// else if(!gmr.getRule(top, front).isEmpty()) {
+					// 	workingStack.pop();
+					// 	workingStack.push(gmr.getRule(top, front).reverse());
 
-		//			// }
-		//			// else {
-		//			// 	printStatus();
-		//			// }
-		//		}
-		//	}
-		//}
+					// }
+					// else {
+					// 	printStatus();
+					// }
+				}
+			}
+		}
 		
 		return pst;
 
