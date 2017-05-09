@@ -24,9 +24,11 @@ public:
 	
 	~Node() {}
 
-	void insert(Node* newChild) {}
+	void insert(Node* newChild) {
+		children.push_back(newChild);
+	}
 
-	list<Node*> getChildren() {
+	list<Node *> getChildren() {
 		return children;
 	}
 
