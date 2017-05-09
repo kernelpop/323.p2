@@ -52,20 +52,25 @@ public:
 };
 
 
-class Terminal : public symbol {                                //------ERROR
-   token* tkn;
+class Terminal : public symbol {
+  token* tkn;
 
 public:
-   Terminal(string rName, token* rToken) : symbol(rName, true) {
-       tkn = rToken;                                                  //------ERROR
-   }
+  Terminal(string rName, token* rToken) : symbol(rName, true) {
+    tkn = rToken;
+  }
 
-   Terminal(string rName) : symbol(rName, true) {
-   }
+  Terminal(string rName) : symbol(rName, true) {
 
-   ~Terminal() {
+  }
+
+  ~Terminal() {
     delete tkn;
-   }
+  }
+
+  token* getToken() {
+    return tkn;
+  }
    
 };
 

@@ -70,7 +70,7 @@ public:
 				}
 
 				// if top it terminal check if it matches front
-				if(top->getName() == front.id) {	// ****may have to change this
+				else if(*(static_cast<Terminal*>(top)->getToken()) == front) {	// ****may have to change this
 					cout << "Matched: " << front.id;
 					cout << ". Popping off the top and the front." << endl;
 

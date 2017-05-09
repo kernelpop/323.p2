@@ -27,7 +27,10 @@ struct token {
 	token(string rId) {
 		id = rId;
 	}
-	
+
+	friend bool operator==(const token& lhs, const token& rhs) {
+		return lhs.id == rhs.id;
+	}
 	
 };
 
@@ -171,7 +174,7 @@ vector<token> tokenize(vector<string> lines) {
 					if (whichKwd(s) == NOTKWD) {         // If not a kwd then it's ident
 						currTokenIndex++;
 						// create token for ident
-						TokenList.push_back(tokenate(currLine, "ident", currTokenIndex, s));
+						TokenList.push_back(tokenate(currLine, "id", currTokenIndex, s));
 					}
 					else {
 						currTokenIndex++;
@@ -358,11 +361,11 @@ void token_printer(string _Language, vector<token> &tokens) { // Prints out all 
 
 		cout << "(:token " << tokens[i].ln << " " << tokens[i].id;	//	Print line number
 
-		if (tokens[i].id == "ident") {	//	If the token has an index, print it
+		if (tokens[i].id == "id") {	//	If the token has an index, print it
 			cout << " :ix " << tokens[i].ix;
 		}
 
-		if (tokens[i].id == "ident" |
+		if (tokens[i].id == "id" |
 			tokens[i].id == "string" |
 			tokens[i].id == "int" |
 			tokens[i].id == "float") {

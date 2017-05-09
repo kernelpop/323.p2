@@ -65,30 +65,30 @@ public:
 class Grammar {
 
     void createTerminals() {
-        terminals["kwdprog"] = new Terminal("kwdprog");
-        terminals["kwdinput"] = new Terminal("kwdinput");
-        terminals["kwdprint"] = new Terminal("kwdprint");
-        terminals["kwdwhile"] = new Terminal("kwdwhile");
-        terminals["kwdif"] = new Terminal("kwdif");
-        terminals["kwdelseif"] = new Terminal("kwdelseif");
-        terminals["kwdelse"] = new Terminal("kwdelse");
-        terminals["paren1"] = new Terminal("paren1");
-        terminals["paren2"] = new Terminal("paren2");
-        terminals["brace1"] = new Terminal("brace1");
-        terminals["brace2"] = new Terminal("brace2");
-        terminals["comma"] = new Terminal("comma");
-        terminals["semi"] = new Terminal("semi");
-        terminals["equal"] = new Terminal("equal");
-        terminals["plus"] = new Terminal("plus");
-        terminals["minus"] = new Terminal("minus");
-        terminals["aster"] = new Terminal("aster");
-        terminals["slash"] = new Terminal("slash");
-        terminals["caret"] = new Terminal("caret");
-        terminals["id"] = new Terminal("id");
-        terminals["int"] = new Terminal("int");
-        terminals["float"] = new Terminal("float");
-        terminals["string"] = new Terminal("string");
-        terminals["$"] = new Terminal ("$");
+        terminals["kwdprog"] = new Terminal("kwdprog", new token("kwdprog"));
+        terminals["kwdinput"] = new Terminal("kwdinput", new token("kwdinput"));
+        terminals["kwdprint"] = new Terminal("kwdprint", new token("kwdprint"));
+        terminals["kwdwhile"] = new Terminal("kwdwhile", new token("kwdwhile"));
+        terminals["kwdif"] = new Terminal("kwdif", new token("kwdif"));
+        terminals["kwdelseif"] = new Terminal("kwdelseif", new token("kwdelseif"));
+        terminals["kwdelse"] = new Terminal("kwdelse", new token("kwdelse"));
+        terminals["paren1"] = new Terminal("paren1", new token("paren1"));
+        terminals["paren2"] = new Terminal("paren2", new token("paren2"));
+        terminals["brace1"] = new Terminal("brace1", new token("brace1"));
+        terminals["brace2"] = new Terminal("brace2", new token("brace2"));
+        terminals["comma"] = new Terminal("comma", new token("comma"));
+        terminals["semi"] = new Terminal("semi", new token("semi"));
+        terminals["equal"] = new Terminal("equal", new token("equal"));
+        terminals["plus"] = new Terminal("plus", new token("plus"));
+        terminals["minus"] = new Terminal("minus", new token("minus"));
+        terminals["aster"] = new Terminal("aster", new token("aster"));
+        terminals["slash"] = new Terminal("slash", new token("slash"));
+        terminals["caret"] = new Terminal("caret", new token("caret"));
+        terminals["id"] = new Terminal("id", new token("id"));
+        terminals["int"] = new Terminal("int", new token("int"));
+        terminals["float"] = new Terminal("float", new token("float"));
+        terminals["string"] = new Terminal("string", new token("string"));
+        terminals["$"] = new Terminal ("$", new token("$"));
         terminals["eps"] = new Terminal("eps");
     }
 
