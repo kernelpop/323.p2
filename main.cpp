@@ -18,6 +18,7 @@ string Test_File = "test_X.txt";
 vector<string> _Strings;
 vector<token> _Tokens;
 string _Language = "A3";
+int pause_time = 500;	//Milliseconds
 
 void runParser(vector<token> tokenList);
 
@@ -77,20 +78,20 @@ int main() {
 void runParser(vector<token> tokenList) {
 
 	cout << endl << ">>> Parser Running" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	Parser parser;
 	cout << ">>> Created Parser object 'parser'" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	Grammar g = parser.getGmr();
 	cout << ">>> Created grammar object 'g'" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	cout << ">>> Sending tokens to 'parser'" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 	parser.addTokensToParser(tokenList);
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 	
 	vector<string> temp;
 
@@ -144,7 +145,7 @@ void runParser(vector<token> tokenList) {
 	temp2.push_back("Pgm");
 
 	cout << ">>> Created list 'temp'" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	/*for(size_t i = 0; i < temp.size(); i++) {
 		symbol t = *g.terminals[temp[i]];
@@ -166,7 +167,7 @@ void runParser(vector<token> tokenList) {
 
 	parser.makePST();
 	cout << ">>> Created PST" << endl;
-	sleep_until(system_clock::now() + seconds(1));
+	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	parser.print_table();
 
