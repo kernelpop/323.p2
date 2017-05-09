@@ -17,6 +17,10 @@ public:
 
     symbol() { }
 
+	bool isTerm() {
+		return isTerminal;
+	}
+
     symbol(string rName, bool rIsTerminal) {
         name = rName;
         isTerminal = rIsTerminal;

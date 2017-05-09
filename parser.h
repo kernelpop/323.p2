@@ -56,62 +56,70 @@ public:
 				
 		Node * pst = new Node(&workingStack.top());
 		
-		/*
+		//while(!workingStack.empty()) {
+		//	
+		//	int i = 0;
+		//	
+		//	symbol top = workingStack.top();
+		//	
+		//	token front = tokenList.front();
+
+		//	if(top.isTerm()) {
+		//		if(top.getName() != front.id) {
+		//			
+		//			// Throw and error: epected x, found y, line front.line
+		//			cout << ">>>>>> Error: stack top is terminal" << endl;
+		//			exit(1);
+
+		//		}
+		//	}
+
+		//	// M1:
+		//	list<symbol> rule;		// = gmr.getRule(top.name, front.id);
+		//	if(!rule.empty()) {
+		//		// Remove the top symbol from stack
+		//		workingStack.pop();
+		//			
+		//		// Add the rule backwards
+		//		for (int i = rule.size() - 1; i >= 0; --i) {
+		//			//workingStack.push(rule[i]);							------ERROR
+		//		}
+
+		//		// Reassign the top variable
+		//			
+		//		//top = workingStack.top();									------ERROR
+		//	} 
+		//	/*else {
+		//		 The rule is empty => there is no prediction for this
+
+		//		 TODO: throw an error
+		//		 Error: unexpected token found, line front.line
+		//	}*/
+
+		//	// M2
+		//	else {
+		//		if (top.isTerm()) {
+		//			// 	Error();
+		//			// }
+
+		//			// // M3
+		//			// else if(gmr.getRule(top, front).isEmpty()){
+		//			// 	Error();
+		//			// }
+
+		//			// // M4
+		//			// else if(!gmr.getRule(top, front).isEmpty()) {
+		//			// 	workingStack.pop();
+		//			// 	workingStack.push(gmr.getRule(top, front).reverse());
+
+		//			// }
+		//			// else {
+		//			// 	printStatus();
+		//			// }
+		//		}
+		//	}
+		//}
 		
-			while(!workingStack.empty()) {
-				// int i = 0;
-				//Symbol top = workingStack.top();								------ERROR
-				//Token front = tokenList.front();							------ERROR
-
-				//if(top.isTerminal()) {										------ERROR
-				//	if(top.name != front.id) {
-				//		// TODO: throw an error
-				//		// Error: epected x, found y, line front.line
-				//	}
-				//}
-
-				// M1:
-				list<Symbol> rule;// = gmr.getRule(top.name, front.id);			------ERROR
-				if(!rule.empty()) {
-					// Remove the top symbol from stack
-					workingStack.pop();
-					
-					// Add the rule backwards
-					for (int i = rule.size() - 1; i >= 0; --i) {
-						//workingStack.push(rule[i]);							------ERROR
-					}
-
-					// Reassign the top variable
-					//top = workingStack.top();									------ERROR
-				} else {
-					// The rule is empty => there is no prediction for this
-
-					// TODO: throw an error
-					// Error: unexpected token found, line front.line
-				}
-
-				// M2
-				// else if(top.isTerminal {
-				// 	Error();
-				// }
-
-				// // M3
-				// else if(gmr.getRule(top, front).isEmpty()){
-				// 	Error();
-				// }
-
-				// // M4
-				// else if(!gmr.getRule(top, front).isEmpty()) {
-				// 	workingStack.pop();
-				// 	workingStack.push(gmr.getRule(top, front).reverse());
-
-				// }
-				// else {
-				// 	printStatus();
-				// }
-			}
-		}
-		*/
 	}
 
 
