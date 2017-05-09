@@ -270,12 +270,12 @@ vector<token> tokenize(vector<string> lines) {
 						// 37 parens1 = '('
 					case '(':
 						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "parens1"));
+						TokenList.push_back(tokenate(currLine, "paren1"));
 						break;
 						// 38 parens2 = ')'
 					case ')':
 						currTokenIndex++;
-						TokenList.push_back(tokenate(currLine, "parens2"));
+						TokenList.push_back(tokenate(currLine, "paren2"));
 						break;
 						// Other punctuation
 						// 41 aster = '*'
