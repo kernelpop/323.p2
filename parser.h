@@ -121,24 +121,23 @@ public:
 
 	//This is the print function of a PST tree.
 	//Implemented as a recursive pre-order function. 
-	//NOTE: this is unfinished
-	void printPST(Node * current)
+	//NOTE: this is untested
+	void printPST(Node * current,Node * root = nullptr)
 	{
 		if (current == nullptr)
 		{
 			cout << "null" << endl;
 			return;
 		}
-		/*else //may not be used
+		else if(current == root)//checks for root
 		{
-			cout << current->getName() + " >>> ";
+			cout << current->getSymbol()->getName() + " >>> ";
 
-		}*/
-		//for (int i = 0; i < current->getChildren().size(); ++i)
-		for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		}
+		for (int i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
 		{
 			cout << current->getSymbol()->getName() << " >>> ";
-			//printPST(current->it);
+			printPST(current->getChildren()->at(i),root);
 		}
 		cout << endl;
 
