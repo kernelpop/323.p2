@@ -54,8 +54,8 @@ public:
 		// Add the start symbol
 		workingStack.push(symbol("Pgm",0));	
 				
-		//Node * pst = new Node(workingStack.top());
-
+		Node * pst = new Node(&workingStack.top());
+		
 		/*
 		
 			while(!workingStack.empty()) {

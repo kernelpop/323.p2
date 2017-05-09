@@ -22,6 +22,10 @@ public:
 		content = rContent;
 	}
 	
+	void setSymbol(symbol * r_sym) {
+		content = r_sym;
+	}
+
 	~Node() {}
 
 	void insert(Node* newChild) {
