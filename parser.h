@@ -45,75 +45,69 @@ public:
 		//	Setup
 		stack<symbol*> workingStack;
 
-		
 		// Add the eof symbol to stack
 		workingStack.push(gmr->terminals["$"]);
 
 		// Add the start symbol to stack
 		workingStack.push(gmr->nonTerminals["Pgm"]);		
 		
-		// Add the eof token to imp
+		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
-		// cout << tokenList.back().id << FILE_PARSER << endl;		// Test if token created succesfully
-		
+		while(!workingStack.empty()) {
+			int i = 0;
+			symbol* top = workingStack.top();
+			token front = tokenList.front();
 
-		pst = new Node(workingStack.top());
-		// pst->insert(new Node(gmr->terminals["$"]));
-		cout << pst->toString(pst) << FILE_PARSER << endl;
+			// M1:
+			Rule rule = gmr->getRuleAt(top->getName(), front.id);
+			if(!rule.isEmpty()) {
 
-		// cout << pst->toString() << FILE_PARSER << endl;
-/*
-			while(!workingStack.empty()) {
-				// int i = 0;
-				//Symbol top = workingStack.top();								------ERROR
-				//Token front = inputStream.front();							------ERROR
+				cout << rule.printRule() << endl;
 
-		//	// M1:
-		//	list<symbol> rule;		// = gmr.getRule(top.name, front.id);
-		//	if(!rule.empty()) {
-		//		// Remove the top symbol from stack
-		//		workingStack.pop();
-		//			
-		//		// Add the rule backwards
-		//		for (int i = rule.size() - 1; i >= 0; --i) {
-		//			//workingStack.push(rule[i]);							------ERROR
-		//		}
+				// Remove the top symbol from stack
+				// workingStack.pop();
+					
+				// Add the rule backwards
+				// vector<symbol*> rhsRev = rule.rhsReversed();
+				// for (int i = 0; i < rhsRev.size(); ++i) {
+				// 	workingStack.push(rhsRev[i]);
+				// }
 
-		//		// Reassign the top variable
-		//			
-		//		//top = workingStack.top();									------ERROR
-		//	} 
-		//	/*else {
-		//		 The rule is empty => there is no prediction for this
+				// Reassign the top variable
+					
+				//top = workingStack.top();									------ERROR
+			} 
+			/*else {
+				 The rule is empty => there is no prediction for this
 
-		//		 TODO: throw an error
-		//		 Error: unexpected token found, line front.line
-		//	}*/
+				 TODO: throw an error
+				 Error: unexpected token found, line front.line
+			}*/
 
-		//	// M2
-		//	else {
-		//		if (top.isTerm()) {
-		//			// 	Error();
-		//			// }
+			// M2
+			else {
+				if (top->isTerm()) {
+					// 	Error();
+					// }
 
-		//			// // M3
-		//			// else if(gmr.getRule(top, front).isEmpty()){
-		//			// 	Error();
-		//			// }
+					// // M3
+					// else if(gmr.getRule(top, front).isEmpty()){
+					// 	Error();
+					// }
 
-		//			// // M4
-		//			// else if(!gmr.getRule(top, front).isEmpty()) {
-		//			// 	workingStack.pop();
-		//			// 	workingStack.push(gmr.getRule(top, front).reverse());
+					// // M4
+					// else if(!gmr.getRule(top, front).isEmpty()) {
+					// 	workingStack.pop();
+					// 	workingStack.push(gmr.getRule(top, front).reverse());
 
-		//			// }
-		//			// else {
-		//			// 	printStatus();
-		//			// }
-		//		}
-		//	}
-		//}
+					// }
+					// else {
+					// 	printStatus();
+					// }
+				}
+			}
+		}
 		
 		return pst;
 
@@ -163,3 +157,20 @@ public:
 	}
 
 };
+
+// Stuff for making a tree
+// cout << tokenList.back().id << FILE_PARSER << endl;		// Test if token created succesfully
+		
+		// Start building the PST
+		// pst = new Node(workingStack.top());
+
+		// For test purposes
+		// pst->insert(new Node(gmr->terminals["$"]));
+		// pst->insert(new Node(gmr->terminals["id"]));
+		// pst->insert(new Node(gmr->terminals["int"]));
+		// pst->insert(new Node(gmr->nonTerminals["Astmt"]));
+		// pst->insert(new Node(gmr->nonTerminals["Block"]));
+		// pst->insert(new Node(gmr->nonTerminals["Pexpr"]));
+		// cout << Node::toString(pst) << FILE_PARSER << endl;
+
+		// cout << pst->toString() << FILE_PARSER << endl;

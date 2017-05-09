@@ -89,9 +89,9 @@ void runParser(vector<token> tokenList) {
 	cout << "Parser created" << FILE_MAIN << endl;
 
 	//	Send the generated tokens to the parse machine
-	parser.addTokensToParse(tokenList);
+	// parser.addTokensToParse(tokenList);
 
-	cout << "Tokens sent to parser" << FILE_MAIN << endl;
+	// cout << "Tokens sent to parser" << FILE_MAIN << endl;
 
 	Grammar g = parser.getGmr();
 	cout << ">>> Created grammar object 'g'" << endl;

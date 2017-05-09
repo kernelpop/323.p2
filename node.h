@@ -48,14 +48,11 @@ public:
 		// children.erase(/*child position*/);
 	}
 
-	symbol * getSymbol()
-	{
+	symbol * getSymbol() {
 		return content;
 	}
 
-	string toString() {
-		return "hello world";
-	string toString(Node* ptr) {
+	static string toString(Node* ptr) {
 		// Base step
 		if(!ptr) {
 			return "";
@@ -66,8 +63,8 @@ public:
 		s += ptr->content->toString();
 		s += "\n";
 
-		for(size_t i = 0; i < children.size(); ++ i) {
-			s += toString(children[i]);
+		for(size_t i = 0; i < ptr->children.size(); ++i) {
+			s += toString(ptr->children[i]);
 			s += "\n";
 		}
 

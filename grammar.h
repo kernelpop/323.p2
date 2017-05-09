@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include <map>
 #include "symbol.h"
 #include <string>
@@ -11,10 +11,10 @@ class Rule {
 
 	symbol* lhs;
 
-	list<symbol*> rhs;
+	vector<symbol*> rhs;
 
 public:
-    Rule(symbol* rLhs, list<symbol*> rRhs) {
+    Rule(symbol* rLhs, vector<symbol*> rRhs) {
         lhs = rLhs;
         rhs = rRhs;
     }
@@ -34,19 +34,25 @@ public:
     	string s;
     	s += lhs->getName();
     	s += " = ";
-    	for (auto it = rhs.begin(); it != rhs.end(); ++it) {
-    		s += (*it)->getName();
+    	for (int i = 0; i < rhs.size(); i++) {
+    		s += rhs[i]->getName();
     		s += " ";
     	}
 
     	return s;
     }
 
-    // list<symbol> rhsReversed() {
-    //     list<symbol> reversed(rhs);
-    //     reversed.reverse();
-    //     return reversed;
-    // }
+    vector<symbol*> rhsReversed() {
+        vector<symbol*> reversed;
+        for (int i = rhs.size() - 1; i >= 0; --i) {
+            reversed.push_back(rhs[i]);
+        }
+        return reversed;
+    }
+
+    bool isEmpty() {
+        return rhs.empty();
+    }
 
 };
 
@@ -108,7 +114,7 @@ class Grammar {
     }
 
     void createRules() {
-    	list<symbol*> temp;
+    	vector<symbol*> temp;
 
 		rules.push_back(NULL); // no rule at index 0
 
@@ -332,16 +338,28 @@ class Grammar {
     	temp.clear();
     }
 
+    void createParseMatrix() {
+        parseMatrix["Pgm_kwdprog"] = 1;
+        parseMatrix["Block_brace1"] = 2;
+        parseMatrix["Stmts_kwdprint"] = 3;
+        parseMatrix["Stmts_kwdwhile"] = 3;
+        parseMatrix["Stmts_kwdif"] = 3;
+        parseMatrix["Stmts_id"] = 3;
+        parseMatrix["Stmts_brace2"] = 4;
+    }
+
 public:
 
     map<string, symbol*> terminals;
     map<string, symbol*> nonTerminals;
-    list<Rule*> rules;
+    map<string, int> parseMatrix;
+    vector<Rule*> rules;
 
     Grammar() {
         createTerminals();
         createNonTerminals();
         createRules();
+        createParseMatrix();
     }
 
     /*~Grammar() {					---------ERROR CAUSES EXECUTION FAIL------------   Error related to iterator
@@ -362,8 +380,10 @@ public:
 
     }*/
 
-    Rule getRuleAt(string top, string next) {
-        return Rule();
+    Rule getRuleAt(string row, string col) {
+        string row_col = row + "_" + col;
+        int ruleNum = parseMatrix[row_col];
+        return *rules[ruleNum];
     }
 
     symbol getRule(string rule) {
