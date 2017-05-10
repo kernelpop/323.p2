@@ -99,8 +99,8 @@ public:
 						
 					// Add the rule in reverse
 					vector<symbol*> rhsRev = rule.rhsReversed();
-					for (int i = 0; i < rhsRev.size(); ++i) {
-						workingStack.push_back(rhsRev[i]);
+					for (size_t i = 0; i < rhsRev.size(); ++i) {
+						workingStack.push(rhsRev[i]);
 					}
 				} else {
 					cout << "The rule is empty => there is no prediction for this";
@@ -152,7 +152,7 @@ public:
 			cout << current->getSymbol()->getName() + " >>> ";
 
 		}
-		for (int i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
 		{
 			cout << current->getSymbol()->getName() << " >>> ";
 			printPST(current->getChildren()->at(i),root);
