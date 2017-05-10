@@ -45,13 +45,13 @@ public:
 		cout << "Starting to parse token list" << endl;
 
 		//	Setup
-		stack<symbol*> workingStack;
+		vector<symbol*> workingStack;
 
 		// Add the eof symbol to stack
-		workingStack.push(gmr->terminals["$"]);
+		workingStack.push_back(gmr->terminals["$"]);
 
 		// Add the start symbol to stack
-		workingStack.push(gmr->nonTerminals["Pgm"]);		
+		workingStack.push_back(gmr->nonTerminals["Pgm"]);		
 		
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
@@ -59,14 +59,14 @@ public:
 		cout << "finished setup" << endl;
 
 		while(!workingStack.empty()) {
-			symbol* top = workingStack.top();
+			symbol* top = workingStack.back();
 			token front = tokenList.front();
 
 			if(top->isTerm()) {
 				// if it's an epsilon rule pop it off
 				if(top->getName() == "eps") {
 					cout << "Popping of eps rule." << endl;
-					workingStack.pop();
+					workingStack.pop_back();
 				}
 
 				// if top it terminal check if it matches front
@@ -76,7 +76,7 @@ public:
 					cout << "\tln: " << front.ln << " ix: " << front.ix << endl;
 
 					// Pop the top
-					workingStack.pop();
+					workingStack.pop_back();
 
 					// Pop the front
 					tokenList.erase(tokenList.begin());
@@ -95,13 +95,30 @@ public:
 					cout << rule.printRule() << endl;
 
 					// Remove the top symbol from stack
-					workingStack.pop();
+					workingStack.pop_back();
 						
 					// Add the rule in reverse
 					vector<symbol*> rhsRev = rule.rhsReversed();
 					for (int i = 0; i < rhsRev.size(); ++i) {
-						workingStack.push(rhsRev[i]);
+						workingStack.push_back(rhsRev[i]);
 					}
+				} else {
+					cout << "The rule is empty => there is no prediction for this";
+					cout << endl;
+
+					// print stack
+					cout << "Current stack" << endl;
+					for(int i = workingStack.size() - 1; i >= 0; i--) {
+						cout << *workingStack[i] << endl;
+					}
+
+					// print input stream
+					cout << endl <<  "Current token stream" << endl;
+					for (int  i = 0; i < tokenList.size(); ++i) {
+						cout << tokenList[i].id << endl;
+					}
+
+					break;
 				} 
 			}
 		}

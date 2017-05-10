@@ -32,7 +32,7 @@ public:
         return name;
     }
 
-    string toString() {
+    string toString() const {
       string s;
       s += name;
       s += " - ";
@@ -48,6 +48,10 @@ public:
         return this->name == rhs.name;
     } */
 
+    friend ostream& operator<<(ostream& os, const symbol& sym) {
+      os << sym.toString();
+      return os;
+    }
 
 };
 

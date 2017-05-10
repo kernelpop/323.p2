@@ -388,6 +388,8 @@ class Grammar {
         parseMatrix["E_float"] = 22;
         parseMatrix["E_string"] = 22;
         parseMatrix["E_paren1"] = 22;
+        parseMatrix["S_plus"] = 26;
+        parseMatrix["S_minus"] = 26;
         parseMatrix["S_aster"] = 24;
         parseMatrix["S_slash"] = 24;
         parseMatrix["S_caret"] = 24;
