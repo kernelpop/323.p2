@@ -100,7 +100,7 @@ public:
 					// Add the rule in reverse
 					vector<symbol*> rhsRev = rule.rhsReversed();
 					for (size_t i = 0; i < rhsRev.size(); ++i) {
-						workingStack.push(rhsRev[i]);
+						workingStack.push_back(rhsRev[i]);
 					}
 				} else {
 					cout << "The rule is empty => there is no prediction for this";
@@ -109,12 +109,12 @@ public:
 					// print stack
 					cout << "Current stack" << endl;
 					for(int i = workingStack.size() - 1; i >= 0; i--) {
-						cout << *workingStack[i] << endl;
+						//cout << *workingStack[i] << endl;
 					}
 
 					// print input stream
 					cout << endl <<  "Current token stream" << endl;
-					for (int  i = 0; i < tokenList.size(); ++i) {
+					for (size_t  i = 0; i < tokenList.size(); ++i) {
 						cout << tokenList[i].id << endl;
 					}
 
