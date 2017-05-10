@@ -80,7 +80,8 @@ public:
 
 					// Add token to symtable if it is identifier
 					if (front.id=="id") {
-						//symTable.add_symbol();
+						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str);
+						symTable.add_symbol(*temp);
 					}
 
 					// Pop the front

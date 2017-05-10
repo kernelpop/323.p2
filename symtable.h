@@ -13,34 +13,64 @@ struct occurence {
 };
 
 class Sym {
+
+	int ln;
+	string id;
 	int ix;
-	string printName;
+	string str;
 	bool isString;
 	double valueDouble;
 	string valueString;
-	list<occurence> occurences;
+
 public:
 
 	Sym() {}
 
-	//Sym() {}
+	Sym(int _ln, string _id, int _ix, string _str) {
+		ln = _ln;
+		id = _id;
+		ix = _ix;
+		str = _str;
+	}
 	
 	~Sym() {}
+
+	vector<occurence> occs;
+
+	void add_occ(int _ln, int _ix) {
+		occurence a;
+		a.lineNum = _ln;
+		a.tokenNum = _ix;
+		a.isDef = false;
+		occs.push_back(a);
+	}
+
+	string get_str() {
+		return str;
+	}
+
+	int get_ln() {
+		return ln;
+	}
+
+	int get_ix() {
+		return ix;
+	}
 
 };
 
 class SymTable {
+	
+	int current_indent_level;
+	
 	list<Sym> table;
+	
 	vector<Sym> symbols;
-	//int SYMcount;	// Number of symbols the table is holding
-	int OCCcount;	// Total number of all occurences from all symbols 
-	int width;		// Table width
+
 public:
 	
 	SymTable() {
-		//SYMcount = 2;
-		OCCcount = 2;
-		width = 30;
+		current_indent_level = 0;
 	};
 
 	~SymTable() {
@@ -48,64 +78,85 @@ public:
 	};
 
 	void add_symbol(Sym new_sym) {
-		symbols.push_back(new_sym);
+		bool sym_exists = false;
+		bool sym_added = false;
+		int sym_loc = 0;
+		cout << "Looking for a symtable match" << endl;
+		if (symbols.size() == 0) {
+			symbols.push_back(new_sym);
+			sym_added = true;
+		}
+		else {
+			for (size_t i = 0; i < symbols.size(); i++) {
+				if (symbols[i].get_str() == new_sym.get_str()) {
+					sym_exists = true;
+					sym_loc = i;
+				}
+			}
+		}
+		if (sym_exists) {
+			symbols[sym_loc].add_occ(new_sym.get_ln(), new_sym.get_ix());
+		}
+		else {
+			if (!sym_added) {
+				symbols.push_back(new_sym);
+			}
+		}
 	}
 
 	void print_table() {
-		
-		// Print top of table
-		print_line();
-		
-		// Print all symbols in the table
-		print_table_header("Symbols");
-		for (size_t i = 0; i < symbols.size(); i++) {		//	Will be rewritten once table is filled with content
-			cout << '|';
-			for (int i = 0; i < width; i++) {
-				cout << ' ';
-			}
-			cout << '|' << endl;
+		indent();
+		cout << ">>> Symbol Table" << endl;
+		current_indent_level++;
+		if (symbols.size() == 0) {
+			indent();
+			cout << "0 symbols found." << endl;
 		}
+		else {
+			indent();
+			cout << symbols.size() << " symbol(s) found:" << endl;
+			current_indent_level++;
+			for (size_t i = 0; i < symbols.size(); i++) {
+				indent();
+				cout << "Symbol: " << symbols[i].get_str();
+				indent(1);
+				cout << "First Found On Line: " << symbols[i].get_ln();
+				indent(1);
+				cout << "Index: " << symbols[i].get_ix() << endl;
+				current_indent_level++;
+				if (symbols[i].occs.size() == 0) {
+					indent();
+					cout << "This symbol has only 1 occurrence" << endl;
+				}
+				else {
+					indent();
+					cout << symbols[i].occs.size() << " additional occurrence(s) found:" << endl;
+					current_indent_level++;
+					for (size_t j = 0; j < symbols[i].occs.size(); j++) {
+						indent();
+						cout << "Line: " << symbols[i].occs[j].lineNum;
+						indent(1);
+						cout << "Index: " << symbols[i].occs[j].tokenNum;
+						indent(1);
+						cout << "Is definition: " << symbols[i].occs[j].isDef << endl;
+					}
+					current_indent_level--;
+				}
+				current_indent_level--;
+			}
+		}
+	}
 
-		// Divide the table
-		print_line();
-		
-		// Print all occurences
-		print_table_header("Occurences");
-		for (int i = 0; i < OCCcount; i++) {		//	Will be rewritten once table is filled with content
-			cout << '|';
-			for (int i = 0; i < width; i++) {
-				cout << ' ';
-			}
-			cout << '|' << endl;
+	void indent() {
+		for (int i = 0; i < current_indent_level; i++) {
+			cout << "\t";
 		}
-		
-		// Print bottom of table
-		print_line();
+	}
+
+	void indent(int count) {
+		for (int i = 0; i < count; i++) {
+			cout << "\t";
+		}
 	}
 	
-	void print_line() {
-		cout << '+';
-		for (int i = 0; i < width; i++) {
-			cout << '-';
-		}
-		cout << '+' << endl;
-	}
-
-	void print_table_header(string section_type) {
-		int space = (width - section_type.length()) / 2;
-		cout << '|';
-		for (int i = 0; i < space; i++) {
-			cout << ' ';
-		}
-		cout << section_type;
-		for (int i = 0; i < space; i++) {
-			cout << ' ';
-		}
-		// If space is odd, print an extra ' '
-		if ((space % 2) != 0) {
-			cout << ' ';
-		}
-		cout << '|' << endl;
-		print_line();
-	}
 };
