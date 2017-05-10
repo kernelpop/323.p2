@@ -58,6 +58,7 @@ public:
 
 		cout << "finished setup" << endl;
 
+		int tokenIx = 1; // base 1
 		while(!workingStack.empty()) {
 			symbol* top = workingStack.back();
 			token front = tokenList.front();
@@ -70,7 +71,7 @@ public:
 				}
 
 				// if top it terminal check if it matches front
-				else if(*(static_cast<Terminal*>(top)->getToken()) == front) {	// ****may have to change this
+				else if(*(static_cast<Terminal*>(top)->getToken()) == front) {
 					cout << "Matched: " << front.id;
 					cout << ". Popping off the top and the front.\n";
 					cout << "\tln: " << front.ln << " ix: " << front.ix << endl;
@@ -86,6 +87,16 @@ public:
 
 					// Pop the front
 					tokenList.erase(tokenList.begin());
+					tokenIx++;
+				}
+
+				// if top doesn't match with front throw error
+				else {
+					cout << "Error occured when parsing token " << tokenIx << endl;
+					cout << "Predicted: " << (static_cast<Terminal*>(top)->getToken())->id;
+					cout << " but instead found: " << front.id << endl;
+
+					break;
 				}
 			} 
 			else {
