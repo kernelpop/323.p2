@@ -1,7 +1,6 @@
 #pragma once
 
 //#include "symbol.h"
-
 #include <string>
 #include <list>
 
@@ -21,19 +20,25 @@ class Sym {
 	string valueString;
 	list<occurence> occurences;
 public:
+
 	Sym() {}
+
+	//Sym() {}
+	
 	~Sym() {}
+
 };
 
 class SymTable {
 	list<Sym> table;
 	vector<Sym> symbols;
-	int SYMcount;	// Number of symbols the table is holding
+	//int SYMcount;	// Number of symbols the table is holding
 	int OCCcount;	// Total number of all occurences from all symbols 
 	int width;		// Table width
 public:
+	
 	SymTable() {
-		SYMcount = 2;
+		//SYMcount = 2;
 		OCCcount = 2;
 		width = 30;
 	};
@@ -53,7 +58,7 @@ public:
 		
 		// Print all symbols in the table
 		print_table_header("Symbols");
-		for (int i = 0; i < SYMcount; i++) {		//	Will be rewritten once table is filled with content
+		for (size_t i = 0; i < symbols.size(); i++) {		//	Will be rewritten once table is filled with content
 			cout << '|';
 			for (int i = 0; i < width; i++) {
 				cout << ' ';

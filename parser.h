@@ -78,10 +78,16 @@ public:
 					// Pop the top
 					workingStack.pop_back();
 
+					// Add token to symtable if it is identifier
+					if (front.id=="id") {
+						//symTable.add_symbol();
+					}
+
 					// Pop the front
 					tokenList.erase(tokenList.begin());
 				}
-			} else {
+			} 
+			else {
 				// M1:
 				Rule rule = gmr->getRuleAt(top->getName(), front.id);
 
