@@ -79,6 +79,11 @@ public:
 					// Pop the top
 					workingStack.pop_back();
 
+					// Add token to symtable if it is identifier
+					if (front.id=="id") {
+						//symTable.add_symbol();
+					}
+
 					// Pop the front
 					tokenList.erase(tokenList.begin());
 					tokenIx++;
@@ -92,7 +97,8 @@ public:
 
 					break;
 				}
-			} else {
+			} 
+			else {
 				// M1:
 				Rule rule = gmr->getRuleAt(top->getName(), front.id);
 
@@ -120,12 +126,12 @@ public:
 					// print stack
 					cout << "Current stack" << endl;
 					for(int i = workingStack.size() - 1; i >= 0; i--) {
-						cout << *workingStack[i] << endl;
+						//cout << *workingStack[i] << endl;
 					}
 
 					// print input stream
 					cout << endl <<  "Current token stream" << endl;
-					for (int  i = 0; i < tokenList.size(); ++i) {
+					for (size_t  i = 0; i < tokenList.size(); ++i) {
 						cout << tokenList[i].id << endl;
 					}
 
