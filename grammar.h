@@ -364,7 +364,6 @@ class Grammar {
         parseMatrix["Y_int"] = 11;
         parseMatrix["Y_float"] = 11;
         parseMatrix["Y_string"] = 11;
-        parseMatrix["Y_kwdinput"] = 11;
         parseMatrix["Y_paren1"] = 11;
         parseMatrix["Ostmt_kwdprint"] = 12;
         parseMatrix["Wstmt_kwdwhile"] = 13;

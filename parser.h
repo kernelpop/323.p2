@@ -72,7 +72,8 @@ public:
 				// if top it terminal check if it matches front
 				else if(*(static_cast<Terminal*>(top)->getToken()) == front) {	// ****may have to change this
 					cout << "Matched: " << front.id;
-					cout << ". Popping off the top and the front." << endl;
+					cout << ". Popping off the top and the front.\n";
+					cout << "\tln: " << front.ln << " ix: " << front.ix << endl;
 
 					// Pop the top
 					workingStack.pop();
