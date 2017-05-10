@@ -27,18 +27,25 @@ public:
 
 class SymTable {
 	list<Sym> table;
-	int SYMcount;	//Number of symbols the table is holding
-	int OCCcount;	//Total number of all occurences from all symbols 
-	int width;
+	vector<Sym> symbols;
+	int SYMcount;	// Number of symbols the table is holding
+	int OCCcount;	// Total number of all occurences from all symbols 
+	int width;		// Table width
 public:
 	SymTable() {
 		SYMcount = 2;
 		OCCcount = 2;
 		width = 30;
 	};
+
 	~SymTable() {
 
 	};
+
+	void add_symbol(Sym new_sym) {
+		symbols.push_back(new_sym);
+	}
+
 	void print_table() {
 		
 		// Print top of table

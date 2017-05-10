@@ -31,8 +31,8 @@ public:
 		children.push_back(newChild);
 	}
 
-	vector<Node*> getChildren() {
-		return children;
+	vector<Node*>* getChildren() {
+		return &children;
 	}
 
 	Node find(string node) {
