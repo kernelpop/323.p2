@@ -182,7 +182,14 @@ public:
 	}
 
 	void printAST(Node * current) {
-
+		if (current == nullptr)
+		{
+			cout << "null" << endl;
+			return;
+		}
+		printAST(current->getChildren()->at(0));
+		cout << current->getSymbol()->getName() << endl;
+		printAST(current->getChildren()->at(1));
 	}
 	
 	Grammar getGmr() {
