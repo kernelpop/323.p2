@@ -36,7 +36,9 @@ public:
 	}
 
 	Node find(string node) {
-		if (children.empty()) {}
+		if (children.empty()) {
+			//return;
+		}
 
 		for (size_t i = 0; i < children.size(); ++i) {}
 

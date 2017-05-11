@@ -16,7 +16,7 @@ const string FILE_PARSER = " - parser.h";
 
 class Parser {
 	Grammar* gmr;
-	Node* pst;
+	Node* pst = new Node();
 	Node* ast;
 	SymTable symTable;
 	vector<token> tokenList;
@@ -81,7 +81,7 @@ public:
 
 					// Add token to symtable if it is identifier
 					if (front.id=="id") {
-						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str,0,"undef");
+						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str,0,"null");
 						symTable.add_symbol(*temp);
 					}
 
@@ -119,6 +119,8 @@ public:
 					vector<symbol*> rhsRev = rule.rhsReversed();
 					for (size_t i = 0; i < rhsRev.size(); ++i) {
 						workingStack.push_back(rhsRev[i]);
+						Node * temp = new Node(rule.getRhs()[i]);
+						pst->insert(temp);
 					}
 				} else {
 					cout << "The rule is empty => there is no prediction for this";
