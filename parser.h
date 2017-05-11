@@ -16,10 +16,11 @@ const string FILE_PARSER = " - parser.h";
 
 class Parser {
 	Grammar* gmr;
-	Node* pst = new Node();
+	Node* pst;
 	Node* ast;
 	SymTable symTable;
 	vector<token> tokenList;
+	Node* mom;
 
 public:
 
@@ -30,6 +31,13 @@ public:
 	Parser() {
 		gmr = new Grammar();
 	}
+    
+    ~Parser() {
+        // delete gmr;
+        // delete pst;
+        // delete ast;
+        // delete mom;
+    }
 
 	void print_table() {
 		symTable.print_table();
@@ -44,7 +52,7 @@ public:
 		
 		cout << "Starting to parse token list" << endl;
 
-		//	Setup
+		// Setup
 		vector<symbol*> workingStack;
 
 		// Add the eof symbol to stack
@@ -56,9 +64,13 @@ public:
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
-		pst->setSymbol(workingStack[workingStack.size()-1]);
+		// Add $ as root
+		pst = new Node(workingStack[0], NULL, 0);
 
-		cout << "finished setup" << endl;
+		// Set mom to Pgm
+		mom = pst;
+
+		cout << "Finished setup" << endl;
 
 		int tokenIx = 1; // base 1
 		while(!workingStack.empty()) {
@@ -68,8 +80,19 @@ public:
 			if(top->isTerm()) {
 				// if it's an epsilon rule pop it off
 				if(top->getName() == "eps") {
-					cout << "Popping of eps rule." << endl;
+					
+                    // check to see if mom has sibling
+                    while( !( ( mom->getParent() )->getChild( mom->getIx() + 1 ) ) ) {
+                        
+                        if( mom->getParent() ) {
+                            mom = mom->getParent();
+                        }
+                    }
+                    mom = ( mom->getParent() )->getChild( mom->getIx() + 1 );
+                    
+                    cout << "Popping of eps rule." << endl;
 					workingStack.pop_back();
+                    
 				}
 
 				// if top it terminal check if it matches front
@@ -78,14 +101,35 @@ public:
 					cout << ". Popping off the top and the front.\n";
 					cout << "\tln: " << front.ln << " ix: " << front.ix << endl;
 
-					// Pop the top
-					workingStack.pop_back();
-
 					// Add token to symtable if it is identifier
 					if (front.id=="id") {
 						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str,0,"null");
 						symTable.add_symbol(*temp);
 					}
+
+                    bool isAtTop = false;
+					// Set mom to next kid
+                    if(mom->getParent()) {
+                        while( !( ( mom->getParent() )->getChild( mom->getIx() + 1 ) ) ) {
+                            
+                            if( mom->getParent() ) {
+                                mom = mom->getParent();
+                                
+                                // if we're at the top of the tree
+                                if(mom == pst) {
+                                    isAtTop = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if(!isAtTop) {
+                            mom = ( mom->getParent() )->getChild( mom->getIx() + 1 );
+                        }
+                    }
+                    
+					
+					// Pop the top
+					workingStack.pop_back();
 
 					// Pop the front
 					tokenList.erase(tokenList.begin());
@@ -102,7 +146,7 @@ public:
 				}
 			} 
 			else {
-				// M1:
+				// M1: Top is a NonTerminal
 				Rule rule = gmr->getRuleAt(top->getName(), front.id);
 
 				cout << "Checking for rule: ";
@@ -121,10 +165,17 @@ public:
 					vector<symbol*> rhsRev = rule.rhsReversed();
 					for (size_t i = 0; i < rhsRev.size(); ++i) {
 						workingStack.push_back(rhsRev[i]);
-						Node * temp = new Node(rule.getRhs()[i]);
-						temp->setParent(pst);
-						pst->insert(temp);
+						// Node * temp = new Node(rule.getRhs()[i]);
+						// temp->setParent(pst);
+						// pst->insert(temp);
 					}
+
+					// Add rule rhs to mom
+					mom->insertChildren(rule.getRhs());
+					
+					// Set mom to first child
+					mom = mom->getChild(0);
+
 				} else {
 					cout << "The rule is empty => there is no prediction for this";
 					cout << endl;
@@ -189,7 +240,7 @@ public:
 		}
 		cout << endl;
 
-	// }
+	}
 
 	void printAST(Node * current) {
 		if (current == nullptr)
