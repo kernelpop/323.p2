@@ -149,39 +149,39 @@ public:
 
 	//Take the tree and create a printable represenation of it
 	//@param tree a node pointer to the tree to serialize
-	Node * makeAST(Node * pst) {
-		Node * AST;
-		//	NEEDS IMPLEMENTATION
-		return AST;
-	}
+	// Node * makeAST(Node * pst) {
+	// 	Node * AST;
+	// 	//	NEEDS IMPLEMENTATION
+	// 	return AST;
+	// }
 
 	//This is the print function of a PST tree.
 	//Implemented as a recursive pre-order function. 
 	//NOTE: this is untested
-	void printPST(Node * current,Node * root = nullptr)
-	{
-		if (current == nullptr)
-		{
-			cout << "null" << endl;
-			return;
-		}
-		else if(current == root)//checks for root
-		{
-			cout << current->getSymbol()->getName() + " >>> ";
+	// void printPST(Node * current,Node * root = nullptr)
+	// {
+	// 	if (current == nullptr)
+	// 	{
+	// 		cout << "null" << endl;
+	// 		return;
+	// 	}
+	// 	else if(current == root)//checks for root
+	// 	{
+	// 		cout << current->getSymbol()->getName() + " >>> ";
 
-		}
-		for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
-		{
-			cout << current->getSymbol()->getName() << " >>> ";
-			printPST(current->getChildren()->at(i),root);
-		}
-		cout << endl;
+	// 	}
+	// 	for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+	// 	{
+	// 		cout << current->getSymbol()->getName() << " >>> ";
+	// 		printPST(current->getChildren()->at(i),root);
+	// 	}
+	// 	cout << endl;
 
-	}
+	// }
 
-	void printAST(Node * current) {
+	// void printAST(Node * current) {
 
-	}
+	// }
 	
 	Grammar getGmr() {
 		return *gmr;
