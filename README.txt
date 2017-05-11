@@ -26,8 +26,6 @@ Installation/Run Info:
 Bugs Remaining/Future Work:  
 	Complete PST/AST construction  
 	Complete PST/AST printer  
-	Complete symbol table construction  
-	Complete symbol table printer  
 
 Features Added:
 N/A

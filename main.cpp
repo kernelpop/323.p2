@@ -180,7 +180,7 @@ void runParser(vector<token> tokenList) {
 
 	cout << ">>> Printing PST" << endl;
 	sleep_until(system_clock::now() + milliseconds(pause_time));
-	//parser.printPST(pst);
+	parser.printPST(pst);
 	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	parser.print_table();

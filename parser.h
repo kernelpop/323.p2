@@ -16,7 +16,7 @@ const string FILE_PARSER = " - parser.h";
 
 class Parser {
 	Grammar* gmr;
-	Node* pst;
+	Node* pst = new Node();
 	Node* ast;
 	SymTable symTable;
 	vector<token> tokenList;
@@ -56,6 +56,8 @@ public:
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
+		pst->setSymbol(workingStack[workingStack.size()-1]);
+
 		cout << "finished setup" << endl;
 
 		int tokenIx = 1; // base 1
@@ -81,7 +83,7 @@ public:
 
 					// Add token to symtable if it is identifier
 					if (front.id=="id") {
-						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str);
+						Sym * temp = new Sym(front.ln,front.id,front.ix,front.str,0,"null");
 						symTable.add_symbol(*temp);
 					}
 
@@ -119,6 +121,9 @@ public:
 					vector<symbol*> rhsRev = rule.rhsReversed();
 					for (size_t i = 0; i < rhsRev.size(); ++i) {
 						workingStack.push_back(rhsRev[i]);
+						Node * temp = new Node(rule.getRhs()[i]);
+						temp->setParent(pst);
+						pst->insert(temp);
 					}
 				} else {
 					cout << "The rule is empty => there is no prediction for this";
@@ -158,30 +163,44 @@ public:
 	//This is the print function of a PST tree.
 	//Implemented as a recursive pre-order function. 
 	//NOTE: this is untested
-	// void printPST(Node * current,Node * root = nullptr)
-	// {
-	// 	if (current == nullptr)
-	// 	{
-	// 		cout << "null" << endl;
-	// 		return;
-	// 	}
-	// 	else if(current == root)//checks for root
-	// 	{
-	// 		cout << current->getSymbol()->getName() + " >>> ";
+	void printPST(Node * current,Node * root = nullptr)
+	{
+		if (current == nullptr)
+		{
+			cout << "null" << endl;
+			return;
+		}
+		else if(current->children.size() == 0)//checks for root
+		{
+			cout << "\t" <<current->getSymbol()->getName() + " >>> " << endl;
+			//current = current->getParent();
+			return;
 
-	// 	}
-	// 	for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
-	// 	{
-	// 		cout << current->getSymbol()->getName() << " >>> ";
-	// 		printPST(current->getChildren()->at(i),root);
-	// 	}
-	// 	cout << endl;
+		}
+		//	Lollipop mom
+		cout << current->getSymbol()->getName() << " >>> " << endl;
+		for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		{
+			
+			current = current->children[i];
+			//printPST(current->getChildren()->at(i),root);
+			printPST(current, root);
+			current = current->getParent();
+		}
+		cout << endl;
 
 	// }
 
-	// void printAST(Node * current) {
-
-	// }
+	void printAST(Node * current) {
+		if (current == nullptr)
+		{
+			cout << "null" << endl;
+			return;
+		}
+		printAST(current->getChildren()->at(0));
+		cout << current->getSymbol()->getName() << endl;
+		printAST(current->getChildren()->at(1));
+	}
 	
 	Grammar getGmr() {
 		return *gmr;

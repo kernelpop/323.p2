@@ -11,14 +11,24 @@ class Node {
 	symbol* content;
 	
 	Node* parent;
-	vector<Node*> children;
+	
 
 public:
 	
+	vector<Node*> children;
+
 	Node() {}
 
 	Node(symbol* rContent) {
 		content = rContent;
+	}
+
+	void setParent(Node * _parent) {
+		parent = _parent;
+	}
+
+	Node * getParent() {
+		return parent;
 	}
 	
 	void setSymbol(symbol * r_sym) {
@@ -31,12 +41,14 @@ public:
 		children.push_back(newChild);
 	}
 
-	vector<Node*>* getChildren() {
+	vector<Node*>*getChildren() {
 		return &children;
 	}
 
 	Node find(string node) {
-		if (children.empty()) {}
+		if (children.empty()) {
+			//return;
+		}
 
 		for (size_t i = 0; i < children.size(); ++i) {}
 
