@@ -171,15 +171,22 @@ public:
 			cout << "null" << endl;
 			return;
 		}
-		else if(current == root)//checks for root
+		else if(current->children.size() == 0)//checks for root
 		{
-			cout << current->getSymbol()->getName() + " >>> ";
+			cout << "\t" <<current->getSymbol()->getName() + " >>> " << endl;
+			//current = current->getParent();
+			return;
 
 		}
+		//	Lollipop mom
+		cout << current->getSymbol()->getName() << " >>> " << endl;
 		for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
 		{
-			cout << current->getSymbol()->getName() << " >>> ";
-			printPST(current->getChildren()->at(i),root);
+			
+			current = current->children[i];
+			//printPST(current->getChildren()->at(i),root);
+			printPST(current, root);
+			current = current->getParent();
 		}
 		cout << endl;
 
