@@ -26,11 +26,13 @@ public:
 
 	Sym() {}
 
-	Sym(int _ln, string _id, int _ix, string _str) {
+	Sym(int _ln, string _id, int _ix, string _str, double _valdb, string _valstr) {
 		ln = _ln;
 		id = _id;
 		ix = _ix;
 		str = _str;
+		valueDouble = _valdb;
+		valueString = _valstr;
 	}
 	
 	~Sym() {}
@@ -55,6 +57,14 @@ public:
 
 	int get_ix() {
 		return ix;
+	}
+
+	double get_valdb() {
+		return valueDouble;
+	}
+
+	string get_valstr() {
+		return valueString;
 	}
 
 };
@@ -122,7 +132,11 @@ public:
 				indent(1);
 				cout << "First Found On Line: " << symbols[i].get_ln();
 				indent(1);
-				cout << "Index: " << symbols[i].get_ix() << endl;
+				cout << "Index: " << symbols[i].get_ix();
+				indent(1);
+				cout << "Double Value: " << symbols[i].get_valdb();
+				indent(1);
+				cout << "String Value: " << symbols[i].get_valstr() << endl;
 				current_indent_level++;
 				if (symbols[i].occs.size() == 0) {
 					indent();
