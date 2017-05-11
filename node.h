@@ -20,6 +20,10 @@ public:
 	Node(symbol* rContent) {
 		content = rContent;
 	}
+
+	void setParent(Node * _parent) {
+		parent = _parent;
+	}
 	
 	void setSymbol(symbol * r_sym) {
 		content = r_sym;

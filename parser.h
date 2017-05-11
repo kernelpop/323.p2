@@ -56,6 +56,9 @@ public:
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
+		symbol * gma = new symbol("GRANDMA", 0);
+		pst->setSymbol(gma);
+
 		cout << "finished setup" << endl;
 
 		int tokenIx = 1; // base 1
@@ -120,6 +123,7 @@ public:
 					for (size_t i = 0; i < rhsRev.size(); ++i) {
 						workingStack.push_back(rhsRev[i]);
 						Node * temp = new Node(rule.getRhs()[i]);
+						temp->setParent(pst);
 						pst->insert(temp);
 					}
 				} else {
