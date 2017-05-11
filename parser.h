@@ -56,8 +56,7 @@ public:
 		// Add the eof token to input 
 		tokenList.push_back(token("$"));
 
-		symbol * gma = new symbol("GRANDMA", 0);
-		pst->setSymbol(gma);
+		pst->setSymbol(workingStack[workingStack.size()-1]);
 
 		cout << "finished setup" << endl;
 
