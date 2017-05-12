@@ -1,0 +1,9 @@
+#! bash
+
+clear
+if [ -f a.out ]; then
+    rm a.out
+fi
+#g++ -std=c++11 main.cpp Grammar.cpp Lexer.cpp Node.cpp NonTerminal.cpp Parser.cpp Rule.cpp Sym.cpp Symbol.cpp SymTable.cpp Terminal.cpp Token.cpp
+g++ -std=c++11 *.cpp
+echo 1 2 3 4 4 3 4 3 4 3 2 1 2 1 4 3 -1 | ./a.out

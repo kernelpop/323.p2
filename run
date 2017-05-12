@@ -4,4 +4,5 @@ clear
 if [ -f a.out ]; then
 	rm a.out
 fi
-g++ -std=c++11 main.cpp && ./a.out
+g++ -std=c++11 g++ -std=c++11 *.cpp && ./a.out
+# main.cpp Grammar.cpp Lexer.cpp Node.cpp NonTerminal.cpp Parser.cpp Rule.cpp Sym.cpp Symbol.cpp SymTable.cpp Terminal.cpp Token.cpp
