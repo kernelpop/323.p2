@@ -251,6 +251,24 @@ public:
 
 	}
 
+	string serialize(Node* ptr, int level) {
+		string s;
+
+		// opening paren
+		s += "(";
+
+		// local info
+		s += "(";
+		s += "Node";
+		
+
+		// children info
+
+
+		// closing paren
+		s += ")";
+	}
+
 	// The AST printing function implemented in-order
 	void printAST(Node * current) {
 		if (current == nullptr)

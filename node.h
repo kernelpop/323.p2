@@ -13,6 +13,8 @@ class Node {
     Node* parent;
     
     int kidIx;
+
+    int id;
     
     
 public:
