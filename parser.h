@@ -13,6 +13,7 @@
 using namespace std;
 
 const string FILE_PARSER = " - parser.h";
+const string PRT_LEVEL_FILL = "___";
 
 class Parser {
 	Grammar* gmr;
@@ -213,35 +214,44 @@ public:
 
 	//This is the print function of a PST tree.
 	//Implemented as a recursive pre-order function. 
-	//NOTE: this is untested
-	void printPST(Node * current,Node * root = nullptr)
+	//NOTE: This is finished
+	void printPST(Node * current,int level = 0)
 	{
 		if (current == nullptr)
 		{
 			cout << "null" << endl;
 			return;
 		}
-		else if(current->children.size() == 0)//checks for root
+		/*if (current->getParent() == nullptr) // ---------Checks for root - Found no use for this but kept just in case------------
 		{
-			cout << "\t" <<current->getSymbol()->getName() + " >>> " << endl;
-			//current = current->getParent();
-			return;
 
-		}
-		//	Lollipop mom
-		cout << current->getSymbol()->getName() << " >>> " << endl;
-		for (size_t i = 0; i < current->getChildren()->size(); ++i)//--------------------------for(auto it = current->getChildren().begin(); it != current->getChildren().begin(); ++it)
+		}*/
+		
+		// Print out the children of current node
+		for (size_t i = 0; i < current->children.size();++i)
 		{
-			
-			current = current->children[i];
-			//printPST(current->getChildren()->at(i),root);
-			printPST(current, root);
-			current = current->getParent();
+			// For loop which makes the tree level more obvious
+			for (int i = 0; i < level; ++i)
+			{
+				// Uses filler to show levels(actual variable is found near the top)
+				cout << PRT_LEVEL_FILL;
+			}
+
+			// Outputs the current node followed by the child node
+			cout << "|-" << current->getSymbol()->getName() << "  >>>  " << current->children[i]->getSymbol()->getName() << endl;
 		}
-		cout << endl;
+		//Enter each child of the current node using this function
+		for (size_t i = 0; i < current->children.size(); ++i)
+		{
+			// Call function recursively using the child as parameter
+			// In addition the level will be incremented
+			printPST(current->children[i],++level);
+		}
+
 
 	}
 
+	// The AST printing function implemented in-order
 	void printAST(Node * current) {
 		if (current == nullptr)
 		{
