@@ -76,17 +76,20 @@ Node* Parser::makePST() {
     // Add the eof symbol to stack
     workingStack.push_back(gmr->getTerminal("$"));
 
+    // Add $ as root
+    pst = new Node(workingStack[0], NULL, 0);
+
     // Add the start symbol to stack
-    workingStack.push_back(gmr->getNonTerminal("Pgm"));       
+    workingStack.push_back(gmr->getNonTerminal("Pgm"));  
+
+    // Add Pgm as a child
+    pst->insert(new Node(workingStack[1], pst, 1));     
     
     // Add the eof token to input 
     tokenList.push_back(Token("$"));
 
-    // Add $ as root
-    pst = new Node(workingStack[0], NULL, 0);
-
     // Set mom to Pgm
-    mom = pst;
+    mom = pst->getChild(0);
 
     cout << "Finished setup" << endl;
 
@@ -180,12 +183,9 @@ Node* Parser::makePST() {
                 workingStack.pop_back();
                     
                 // Add the rule in reverse
-                vector<Symbol*> rhsRev = rule.rhsReversed();
+                vector<Symbol*> rhsRev = rule.getRhsReversed();
                 for (size_t i = 0; i < rhsRev.size(); ++i) {
                     workingStack.push_back(rhsRev[i]);
-                    // Node * temp = new Node(rule.getRhs()[i]);
-                    // temp->setParent(pst);
-                    // pst->insert(temp);
                 }
 
                 // Add rule rhs to mom
@@ -219,7 +219,35 @@ Node* Parser::makePST() {
 
 }
 
-Node* Parser::makeAST() { return new Node(); }
+Node* Parser::makeAST() {
+
+    // Go to the bottom right most node
+    Node* ptr = pst;
+    // while(ptr->getChildren()->size() > 0) {
+    //     for (int i = ptr->getChildren()->size() - 1; i >= 0; --i) {
+    //         if (!ptr->getChild(i)->getSymbol()->isTerm()) {
+    //             ptr = ptr->getChild(i);
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // // Get its parent
+    // ptr = ptr->getParent();
+
+    // Get child that will be hoisted
+    ptr = ptr->getOpChildToHoist();
+
+    // Add needed child pointers to current node
+    ptr->addAstChildren(ptr->getParent());
+
+    // Copy guts to parent/mom and hoist
+    ptr = ptr->copyGutsTo(ptr->getParent());
+
+    cout << "current symbol is: ";
+    cout << ptr->getSymbol()->toString() << endl;
+    return new Node();
+}
 
 void Parser::printPST() {
     printPST(pst);
