@@ -10,6 +10,8 @@
 
 using namespace std;
 
+const static string PRT_LEVEL_FILL = "   ";
+
 Parser::Parser() {
     gmr = new Grammar();
 }
@@ -27,7 +29,7 @@ Parser::~Parser() {
 
 
 void Parser::printAST(Node * current) {
-    if (current == nullptr) {
+    if (current == NULL) {
         cout << "null" << endl;
         return;
     }
@@ -80,6 +82,7 @@ Node* Parser::makePST() {
     pst = new Node(workingStack[0], NULL, 0);
 
     // Add the start symbol to stack
+    cout << gmr->getNonTerminal("Pgm");
     workingStack.push_back(gmr->getNonTerminal("Pgm"));  
 
     // Add Pgm as a child
@@ -188,6 +191,10 @@ Node* Parser::makePST() {
                     workingStack.push_back(rhsRev[i]);
                 }
 
+                // ************ added **************** //
+                Node* t = new Node(rule.getLhs());
+                t->copyGutsTo(mom);
+                
                 // Add rule rhs to mom
                 mom->insertChildren(rule.getRhs());
                 
@@ -200,7 +207,7 @@ Node* Parser::makePST() {
 
                 // print stack
                 cout << "Current stack" << endl;
-                for(int i = workingStack.size() - 1; i >= 0; i--) {
+                for(int i = static_cast<int>(workingStack.size()) - 1; i >= 0; i--) {
                     //cout << *workingStack[i] << endl;
                 }
 
@@ -219,10 +226,190 @@ Node* Parser::makePST() {
 
 }
 
+void Parser::parseAST(Node* mum) {
+    
+    // base step
+    if(!mum) {
+        return;
+    }
+
+    //
+    cout << mum->getSymbol()->getName() << " : " << static_cast<NonTerminal*>(mum->getSymbol()) << endl;
+    
+    // Base step
+    if(mum->getSymbol()->isTerm()) {
+        return;
+    }
+    
+    //
+    if (static_cast<NonTerminal*>(mum->getSymbol())->
+        getRule()->getOpChildIx() == -1) {
+        
+        bool childChk = true;
+        while (childChk) {
+            mum = mum->getParent();
+            
+            if(mum->getChild(0) || mum->getChild(1)) {
+                childChk = false;
+            }
+        }
+        
+        int chIx = mum->getIx();
+        
+        mum = mum->getParent();
+        
+        mum->removeChildAt(chIx);
+        
+        return;
+    }
+    
+    // Base step 3
+    if(static_cast<NonTerminal*>(mum->getSymbol())->
+        getRule()->getOpChildIx() == -2) {
+        
+        // Child to copy from
+        int cIx = static_cast<NonTerminal*>(mum->getSymbol())->
+        getRule()->getLChildIx();
+
+        Node* chld = mum->getChild(cIx);
+
+        mum = chld->copyGutsTo(mum);
+
+        parseAST(mum);
+        return;
+    }
+
+    // pointing at kwdprog for first iteration
+    Node* tmp = mum->getOpChildToHoist();
+
+    // Assigning ast children
+    // lchild -> NULL; rchild -> Block
+    tmp->addAstChildren(mum);
+
+    // Copy self guts to mom
+    mum = tmp->copyGutsTo(mum);
+
+    // Go to left child
+    parseAST(mum->getChild(0));
+
+    // Go to right child
+    parseAST(mum->getChild(1));
+    
+    
+    // ************** addded ************ //
+    if (!mum->getSymbol()->isTerm() || mum->getSymbol()->getName() == "eps") {
+        int chIx = mum->getIx();
+        
+        mum = mum->getParent();
+        
+        mum->removeChildAt(chIx);
+        
+        return;
+    }
+}
+
+void Parser::newParseAST(Node* mom) {
+    
+    // print tree
+    cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+//    printAST(mom);
+    
+    if (!mom) {
+        return;
+    }
+    
+    if(mom->getSymbol()->isTerm()) {
+        return;
+    }
+    
+    int opCIx = static_cast<NonTerminal*>(mom->getSymbol())->getRule()->getOpChildIx();
+    
+    if (opCIx == -1) {
+        // delete up
+        int cIx = mom->getIx();
+        mom->getParent()->removeChildAt(cIx);
+        return;
+    }
+    
+    if(opCIx == -2) {
+        // Child to copy from
+        int cIx = static_cast<NonTerminal*>(mom->getSymbol())->getRule()->getLChildIx();
+        
+        Node* chld = mom->getChild(cIx);
+        
+        mom = chld->copyGutsTo(mom);
+        
+        newParseAST(mom);
+        return;
+    }
+    
+    Node* child = mom->getOpChildToHoist();
+    
+    if(!(child->getSymbol()->isTerm())) {
+        newParseAST(child);
+    }
+    
+    if(child->getSymbol()->getName() == "eps"){
+        // delete up
+        int cIx = mom->getIx();
+        mom->getParent()->removeChildAt(cIx);
+        return;
+    }
+
+    
+    // Hoisting part because child isTerm
+    else {
+        // Assigning ast children
+        child->addAstChildren(mom);
+        
+        // Copy self guts to mom
+        mom = child->copyGutsTo(mom);
+        
+        // Go to left child
+        newParseAST(mom->getChild(0));
+        
+        // Go to right child
+        newParseAST(mom->getChild(1));
+    }
+}
+
+void Parser::removeEpsRules(Node* mom) {
+    if(!mom) {
+        return;
+    }
+    
+    if(mom->getSymbol()->getName() == "eps") {
+        int cIx = mom->getParent()->getIx();
+        mom->getParent()->getParent()->removeChildAt(cIx);
+    }
+    else {
+        for (int i = 0; i < mom->getChildCount(); i++) {
+            if(mom->getChild(i)) {
+                removeEpsRules(mom->getChild(i));
+            }
+        }
+    }
+}
+
+//void Parser::hoist() {
+//    
+//}
+
 Node* Parser::makeAST() {
 
+    // Make ast point to pst
+    ast = pst;
+
+    // We are pointing at Pgm
+    Node* mm = ast->getChild(0);
+
+    removeEpsRules(mm);
+//    parseAST(mm);
+    newParseAST(mm);
+
+
     // Go to the bottom right most node
-    Node* ptr = pst;
+    // Node* ptr = pst;
     // while(ptr->getChildren()->size() > 0) {
     //     for (int i = ptr->getChildren()->size() - 1; i >= 0; --i) {
     //         if (!ptr->getChild(i)->getSymbol()->isTerm()) {
@@ -236,24 +423,63 @@ Node* Parser::makeAST() {
     // ptr = ptr->getParent();
 
     // Get child that will be hoisted
-    ptr = ptr->getOpChildToHoist();
+    // ptr = ptr->getOpChildToHoist();
 
     // Add needed child pointers to current node
-    ptr->addAstChildren(ptr->getParent());
+    // ptr->addAstChildren(ptr->getParent());
 
     // Copy guts to parent/mom and hoist
-    ptr = ptr->copyGutsTo(ptr->getParent());
+    // ptr = ptr->copyGutsTo(ptr->getParent());
 
     cout << "current symbol is: ";
-    cout << ptr->getSymbol()->toString() << endl;
+    // cout << ptr->getSymbol()->toString() << endl;
     return new Node();
 }
 
-void Parser::printPST() {
-    printPST(pst);
+//This is the print function of a PST tree.
+//Implemented as a recursive pre-order function.
+//NOTE: This is finished
+void Parser::printPST(Node * current, int level = 0)
+{
+    if (current == nullptr) {
+        cout << "null" << endl;
+        return;
+    }
+    /*if (current->getParent() == nullptr) // ---------Checks for root - Found no use for this but kept just in case------------
+     {
+     }*/
+    
+    // For loop which makes the tree level more obvious
+    string r;
+    for (int i = 0; i < level; ++i) {
+        // Uses filler to show levels(actual variable is found near the top)
+        r += PRT_LEVEL_FILL;
+    }
+    
+    cout << r;
+    
+    // print paren 1
+    cout << "(";
+    
+    // print self
+    cout << current->localInfoStr() << "\n";
+    
+    int cLevel = ++level;
+    // Print out the children of current node
+    for (size_t i = 0; i < current->getChildren()->size();++i) {
+        printPST(current->getChild(static_cast<int>(i)), cLevel);
+    }
+    
+    cout << r << ")\n";
 }
 
-void Parser::printAST() {}
+void Parser::printPST() {
+    printPST(pst->getChild(0), 0);
+}
+
+void Parser::printAST() {
+    printPST(ast->getChild(0), 0);
+}
 
 
 void Parser::printSymTable() {

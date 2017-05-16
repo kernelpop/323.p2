@@ -16,13 +16,13 @@ SymTable::~SymTable() {}
 
 void SymTable::indent() {
     for (int i = 0; i < currentIndentLevel; i++) {
-        cout << "\t";
+        cout << "  ";
     }
 }
 
 void SymTable::indent(int count) {
     for (int i = 0; i < count; i++) {
-        cout << "\t";
+        cout << "  ";
     }
 }
 
@@ -39,7 +39,7 @@ void SymTable::addSymbol(Sym newSym) {
         for (size_t i = 0; i < symbols.size(); i++) {
             if (symbols[i].getStr() == newSym.getStr()) {
                 sym_exists = true;
-                sym_loc = i;
+                sym_loc = static_cast<int>(i);
             }
         }
     }
@@ -87,15 +87,16 @@ void SymTable::printTable() {
                 currentIndentLevel++;
                 for (size_t j = 0; j < symbols[i].getNumOccs(); j++) {
                     indent();
-                    cout << "Line: " << symbols[i].getOccLineNum(j);
+                    cout << "Line: " << symbols[i].getOccLineNum(static_cast<int>(j));
                     indent(1);
-                    cout << "Index: " << symbols[i].getOccTokenNum(j);
+                    cout << "Index: " << symbols[i].getOccTokenNum(static_cast<int>(j));
                     indent(1);
-                    cout << "Is definition: " << symbols[i].isOccDef(j) << endl;
+                    cout << "Is definition: " << symbols[i].isOccDef(static_cast<int>(j)) << endl;
                 }
                 currentIndentLevel--;
             }
             currentIndentLevel--;
         }
     }
+//    cout << "finished printing symtable" << endl;
 }

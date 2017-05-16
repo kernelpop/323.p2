@@ -29,7 +29,7 @@ public:
     Symbol* getTerminal(std::string term);
     Symbol* getNonTerminal(std::string nonTerm);
     Rule getRuleAt(std::string row, std::string col);
-    Symbol getRule(std::string rule);
+    Rule getRule(int ruleIx);
 
 };
 

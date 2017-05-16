@@ -28,7 +28,7 @@ void runParser(vector<Token> tokenList);
 int main() {
 	int x = 0;
 	while (true) {
-		cout << "Please input a test number (1-6): ";
+		cout << "Please input a test number (1-8): ";
 		cin >> x;
 		
 		if (x < 0) {
@@ -74,6 +74,9 @@ int main() {
 vector<Token> runLexer(string file) {
 	Lexer lexer(_Language, Test_File);
 	vector<Token> tokens = lexer.tokenize();
+    
+    cout << endl << "--- Token List ---" << endl;
+    
 	lexer.printTokens();
 
 	return tokens;
@@ -81,40 +84,41 @@ vector<Token> runLexer(string file) {
 
 void runParser(vector<Token> tokenList) {
 
-	cout << ">>> Parser Running" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Parser Running" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
 	Parser parser;
-	cout << ">>> Created Parser object 'parser'" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Created Parser object 'parser'" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	cout << "Parser created" << endl;
-
-	cout << ">>> Sending tokens to 'parser'" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
-	parser.addTokensToParser(tokenList);
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Sending tokens to 'parser'" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
+    parser.addTokensToParser(tokenList);
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 	
 	
 	parser.makePST();
-	cout << ">>> Created PST" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Created PST" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	cout << ">>> Printing PST" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
-	parser.printPST();
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Printing PST" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
+    cout << endl << "--- PST ---" << endl;
+    parser.printPST();
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	parser.printSymTable();
+	cout << endl << "--- Symbol Table ---" << endl;
+    parser.printSymTable();
 
 	parser.makeAST();
-	cout << ">>> Created AST" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Created AST" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	cout << ">>> Printing AST" << endl;
-	sleep_until(system_clock::now() + milliseconds(pause_time));
-	parser.printAST();
-	sleep_until(system_clock::now() + milliseconds(pause_time));
+//	cout << ">>> Printing AST" << endl;
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
+	cout << endl << "--- AST ---" << endl;
+    parser.printAST();
+//	sleep_until(system_clock::now() + milliseconds(pause_time));
 
-	cout << ">>> Parser Done" << endl;
+//	cout << ">>> Parser Done" << endl;
 }

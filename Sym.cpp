@@ -46,7 +46,7 @@ void Sym::addOcc(int _ln, int _ix) {
 }
 
 int Sym::getNumOccs() {
-    return occs.size();
+    return static_cast<int>(occs.size());
 }
 
 int Sym::getOccLineNum(int occ) {

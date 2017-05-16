@@ -9,6 +9,16 @@ Rule::Rule(Symbol* rLhs, vector<Symbol*> rRhs) {
     lhs = rLhs;
     rhs = rRhs;
 }
+
+Rule::Rule(Symbol* rLhs, std::vector<Symbol*> rRhs,
+        int _opChildIx, int _lChildIx, int _rChildIx) {
+    lhs = rLhs;
+    rhs = rRhs;
+
+    opChildIx = _opChildIx;
+    lChildIx = _lChildIx;
+    rChildIx = _rChildIx;
+}
     
 Rule::Rule() {}
 
@@ -19,14 +29,42 @@ Rule::~Rule() {
     //  rhs.pop_front();
     // }
 }
-    
+
+void Rule::setOpChildIx(int ix) {
+    opChildIx = ix;
+}
+
+void Rule::setLChildIx(int ix) {
+    lChildIx = ix;
+}
+
+void Rule::setRChildIx(int ix) {
+    rChildIx = ix;
+}
+
+int Rule::getOpChildIx() {
+    return opChildIx;
+}
+
+int Rule::getLChildIx() {
+    return lChildIx;
+}
+
+int Rule::getRChildIx() {
+    return rChildIx;
+}
+
+Symbol* Rule::getLhs() {
+    return lhs;
+}
+  
 vector<Symbol*> Rule::getRhs() {
     return rhs;
 }
 
-vector<Symbol*> Rule::rhsReversed() {
+vector<Symbol*> Rule::getRhsReversed() {
     vector<Symbol*> reversed;
-    for (int i = rhs.size() - 1; i >= 0; --i) {
+    for (int i = static_cast<int>(rhs.size()) - 1; i >= 0; --i) {
         reversed.push_back(rhs[i]);
     }
 

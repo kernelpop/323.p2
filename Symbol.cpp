@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Symbol.h"
+#include "Rule.h"
 
 using namespace std;
 
@@ -10,7 +11,11 @@ Symbol::Symbol(){ }
 Symbol::Symbol(string rName, bool rIsTerminal) {
   name = rName;
   isTerminal = rIsTerminal;
+}
 
+Symbol::Symbol(Symbol* oldSymbol) {
+    name = oldSymbol->name;
+    isTerminal = oldSymbol->isTerminal;
 }
 
 Symbol::~Symbol() {}

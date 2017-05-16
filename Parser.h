@@ -21,6 +21,8 @@ private:
 
 	void printAST(Node * current);
     void printPST(Node* current, Node* root);
+    void printPST(Node * current, int level);
+    void removeEpsRules(Node* mom);
 
 public:
 	Parser();
@@ -30,6 +32,8 @@ public:
     void addTokensToParser(std::vector<Token> _TokenList);
     Node* makePST();
     Node* makeAST();
+    void parseAST(Node* mom);
+    void newParseAST(Node* mom);
     void printAST();
     void printPST();
 	void printSymTable();
