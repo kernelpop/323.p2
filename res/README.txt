@@ -2,30 +2,46 @@ cpsc323_project_2
 
 Team ID: DDM
 
-D** B**		*********	***@csu.fullerton.edu  
-D** F**		*********	***@csu.fullerton.edu   
-M** D**		*********	***@csu.fullerton.edu  
+Daniel Bravo		893863209	bravod@csu.fullerton.edu  
+David Feinzimer		891774168	dfeinzimer@csu.fullerton.edu   
+Mircea Dumitrache	890713464	dmircea@csu.fullerton.edu  
 
 Files needed:
-grammar.h  
-main.cpp  
-node.h  
-parser.h  
-symbol.h  
-symtable.h  
-token.h  
-txt_to_strings.h  
+main.cpp
+Grammar.h
+Lexer.h
+Node.h
+NonTerminal.h
+Parser.h
+Rule.h
+Sym.h
+Symbol.h
+SymTable.h
+Terminal.h
+Token.h
+Grammar.cpp
+Lexer.cpp
+Node.cpp
+NonTerminal.cpp
+Parser.cpp
+Rule.cpp
+Sym.cpp
+Symbol.cpp
+SymTable.cpp
+Terminal.cpp
+Token.cpp
+
 
 Installation/Run Info:  
 	Managing test cases:  
 		Place test files in the ./tests directory in the format "test_x.txt" 
 		where x is an integer value.  
 	Using the program:  
-		Enter the integer value of of the test case you would like to run.
+		Enter the integer value of the test case you would like to run.
 
 Bugs Remaining/Future Work:  
-	Complete PST/AST construction  
-	Complete PST/AST printer  
+	Complete AST construction  
+	Complete AST printer  
 
 Features Added:
-N/A
+* tests 5 and 6 are intentianlly written incorrectlly. Additionally, we chose not to stop the parser but to let it continue.
