@@ -1,10 +1,6 @@
-cpsc323_project_2
-
-Team ID: DDM
-
-D** B**		*********	***@csu.fullerton.edu  
-D** F**		*********	***@csu.fullerton.edu   
-M** D**		*********	***@csu.fullerton.edu  
+Daniel Bravo
+David Feinzimer 
+Mircea Dumitrache
 
 Files needed:
 grammar.h  
